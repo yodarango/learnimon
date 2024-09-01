@@ -1,0 +1,68 @@
+.pokemon-container-29kf {
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  justify-content: center;
+  display: grid;
+  gap: 20px;
+
+  .pokemon-container-29kf__container {
+    width: 100;
+
+    .pokemon-container-29kf__card {
+      box-shadow: 0 1px 24px -1px rgba(0 0 0 / 10%);
+      background-image: linear-gradient(
+        150deg,
+        rgba(220, 220, 220, 0.4) 0%,
+        rgba(255 255 255 / 10%) 100%
+      );
+      color: rgba(240 240 240 / 0.7);
+      transition: transform 0.2s ease-out;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      border: 0.5px solid white;
+      backdrop-filter: blur(20px);
+      animation-fill-mode: both;
+      will-change: transform;
+      animation-duration: 6s;
+      border-radius: 20px;
+      position: relative;
+      padding: 30px;
+      height: 100%;
+      width: 100%;
+
+      &:hover {
+        .pokemon-container-29kf__image {
+          transition: 300ms ease-in-out;
+          transform: scale(1.2);
+          position: absolute;
+          rotate: 5deg;
+        }
+
+        h4,
+        p {
+          display: none;
+        }
+      }
+
+      h3 {
+        text-transform: uppercase;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      .pokemon-container-29kf__image {
+        border-radius: 20px;
+        object-fit: contain;
+        max-width: 20rem;
+        display: block;
+        margin: auto;
+        width: 100%;
+      }
+    }
+  }
+}
