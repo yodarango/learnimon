@@ -17,6 +17,7 @@ type BattleGroundProps = {
 
 export const BattleGround = (props: BattleGroundProps) => {
   const { state } = useBattleContext();
+  const { selectedPokemon: pokemon } = state;
   const { children } = props;
 
   const pokemonCaughtClass =
@@ -38,7 +39,16 @@ export const BattleGround = (props: BattleGroundProps) => {
             </div>
             <img src={ashe} alt='hunter of monsters' />
           </div>
-          <h1>is yours!</h1>
+          <IfElse condition={state.pokemonStatus === POKEMON_STATUS_CAUGHT}>
+            <h1>
+              <span className='d-inline-block me-6'>{pokemon?.name}</span> is
+              yours!
+            </h1>
+            <h1>
+              <span className='d-inline-block me-6'>{pokemon?.name}</span> has
+              escaped
+            </h1>
+          </IfElse>
         </IfElse>
       </div>
     </div>

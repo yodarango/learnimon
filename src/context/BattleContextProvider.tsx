@@ -45,11 +45,22 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
     handleStatus(POKEMON_STATUS_ESCAPED);
   };
 
+  const handleSelectUser = (user: Record<string, any>) => {
+    setState((prevState) =>
+      update(prevState, {
+        selectedUser: {
+          $set: user,
+        },
+      })
+    );
+  };
+
   return (
     <BattleContext.Provider
       value={{
         state,
         handlePokemonSelected,
+        handleSelectUser,
         handleCorrect,
         handleWrong,
       }}

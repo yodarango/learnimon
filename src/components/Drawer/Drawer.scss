@@ -1,0 +1,25 @@
+.drawer-71jt {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 80%;
+  max-width: 80rem;
+  transform: translateX(100%);
+  transition: transform 1000ms ease-in-out;
+  z-index: 2;
+
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+.backdrop-71jt {
+  background-color: rgba(var(--dr-delta-rgb), 0.25);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  left: 0;
+  top: 0;
+}
