@@ -1,0 +1,21 @@
+.user-card-55bb {
+  display: flex;
+  align-items: center;
+  gap: var(--dr-spacing-2);
+  margin-bottom: var(--dr-spacing-2);
+
+  &:hover {
+    transition: scale 500ms ease-in-out;
+    cursor: pointer;
+    scale: 0.9;
+  }
+  img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background-color: var(--dr-alpha);
+  }
+  h3 {
+    font-size: 2rem;
+  }
+}

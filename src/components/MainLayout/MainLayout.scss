@@ -1,0 +1,24 @@
+.main-layout-74gv {
+  position: relative;
+  padding-top: 5rem;
+  min-height: 100vh;
+  width: 100%;
+
+  .main-layout-74gv__left {
+    padding: 5rem var(--dr-spacing-4);
+    position: fixed;
+    width: 25rem;
+    height: 100%;
+    top: 0;
+
+    a {
+      text-decoration: none;
+      font-size: var(--dr-font-size-1);
+    }
+  }
+
+  .main-layout-74gv__right {
+    width: calc(100vw - 30rem);
+    margin: 0 0 0 auto;
+  }
+}

@@ -1,0 +1,16 @@
+.layout-09lk {
+  width: 100%;
+  max-width: 80rem;
+
+  .layout-09lk__users {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30%, 15rem));
+    grid-template-rows: auto;
+    gap: var(--dr-spacing-4);
+  }
+
+  .layout-09lk__empty {
+    max-width: 50rem;
+    width: 100%;
+  }
+}

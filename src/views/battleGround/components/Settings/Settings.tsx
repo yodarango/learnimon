@@ -1,6 +1,7 @@
-import React, { HTMLProps, useEffect } from "react";
+import React, { HTMLProps, useEffect, useState } from "react";
+import { Menu, MenuButton, MenuItem } from "@mui/base";
 import { useBattleContext } from "@context";
-import { Drawer } from "@components";
+import { Dropdown, Thumbnail } from "@ds";
 
 // styles
 import "./Settings.scss";
@@ -9,12 +10,7 @@ export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
   const { handleSelectUser, state } = useBattleContext();
   const { selectedUser } = state;
 
-  const [users, setUsers] = React.useState<Record<string, any>[]>([]);
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const handleToggleDrawer = () => {
-    setIsOpen(!isOpen);
-  };
+  const [users, setUsers] = useState<Record<string, any>[]>([]);
 
   useEffect(() => {
     const users = localStorage.getItem("learnimon__users");
@@ -25,35 +21,30 @@ export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
 
   return (
     <div className='settings-20mn'>
-      <button onClick={handleToggleDrawer} className='bg-nu color-alpha'>
-        <ion-icon name='settings-outline' className='settings-outline' />
-      </button>
-      <Drawer isOpen={isOpen} onClose={handleToggleDrawer}>
-        <h3 className='mb-6'>Players 🎮</h3>
-        <div className='settings-20mn__users'>
-          {users.map((user, index) => (
-            <div
-              key={index}
-              className={
-                "settings-20mn__user d-flex align-items-center flex-column justify-content-center bg-gamma rounded p-4 " +
-                (selectedUser?.name === user.name
-                  ? " border border-iota"
-                  : "border border-zeta")
-              }
-              onClick={() => handleSelectUser(user)}
-            >
-              <img src={user.avatar} alt={user.name} className='d-block' />
-              <h4>{user.name}</h4>
-              <p>
-                <b className='color-theta'>Pokemons</b>: {user.pokemons.length}
-              </p>
-              <p>
-                <b className='color-kappa'>Score:</b> {user.score}
-              </p>
-            </div>
+      <Dropdown>
+        <MenuButton className='bg-nu p-0'>
+          <Thumbnail
+            src={selectedUser?.avatar}
+            alt='selected user avatar'
+            className='settings-20mn__avatar'
+          />
+        </MenuButton>
+
+        <Menu style={{ zIndex: 13 }} className='bg-beta'>
+          {users.map((user) => (
+            <MenuItem key={user.name} onClick={() => handleSelectUser(user)}>
+              <div className='d-flex align-items-center justify-content-start gap-2 p-4'>
+                <Thumbnail
+                  src={user.avatar}
+                  alt='user avatar'
+                  className='settings-20mn__avatar'
+                />
+                <p>{user.name}</p>
+              </div>
+            </MenuItem>
           ))}
-        </div>
-      </Drawer>
+        </Menu>
+      </Dropdown>
     </div>
   );
 };

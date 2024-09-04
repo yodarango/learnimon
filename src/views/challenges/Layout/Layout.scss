@@ -1,0 +1,15 @@
+.layout-99th {
+  width: 100%;
+  max-width: 80rem;
+
+  .layout-99th__form {
+    input[type="number"] {
+      max-width: 10rem;
+    }
+  }
+
+  .layout-99th__empty {
+    max-width: 50rem;
+    width: 100%;
+  }
+}
