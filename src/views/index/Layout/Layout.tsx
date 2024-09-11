@@ -2,15 +2,13 @@ import { IfElse, Input, Portal, Snackbar, Thumbnail, Toast } from "@ds";
 import { UserCard } from "../components/UserCard/UserCard";
 import ShroodEmpty from "@assets/images/shrood_empty.webp";
 import { useEffect, useState } from "react";
-import { useBattleContext } from "@context";
 
 // styles
 import "./Layout.scss";
-import { useNavigate } from "react-router-dom";
+import { generatePath, useNavigate } from "react-router-dom";
 import { ROUTE_BATTLE } from "@constants";
 
 export const Layout = () => {
-  const { handleSelectUser } = useBattleContext();
   const navigate = useNavigate();
 
   const [users, setUsers] = useState<Record<string, any>[]>([]);
@@ -45,8 +43,10 @@ export const Layout = () => {
   };
 
   const handleSelectUserAndBattle = (user: Record<string, any>) => {
-    handleSelectUser(user);
-    navigate(ROUTE_BATTLE);
+    const userBattlePath = generatePath(ROUTE_BATTLE, {
+      name: String(user.name).replace(/\s/g, "-"),
+    });
+    navigate(userBattlePath);
   };
 
   return (

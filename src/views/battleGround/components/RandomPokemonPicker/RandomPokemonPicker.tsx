@@ -32,7 +32,6 @@ export const RandomPokemonPicker: React.FC = () => {
 
   const [randomNumber, setRandomNumber] = useState<number | null>(null);
   const [animationIndex, setAnimationIndex] = useState<number>(0);
-  // const [pokemon, setPokemon] = useState<TPokemon | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   // Replace these paths with your local image paths
@@ -50,9 +49,7 @@ export const RandomPokemonPicker: React.FC = () => {
   ];
 
   const getRandomPokemon = async () => {
-    console.log("Getting random Pokémon...");
     setLoading(true);
-    // setPokemon(null);
 
     // Start the random animation
     let interval: NodeJS.Timeout;
@@ -69,7 +66,6 @@ export const RandomPokemonPicker: React.FC = () => {
 
       const data = pokemonData[number];
 
-      console.log(data);
       // setPokemon(data);
       handlePokemonSelected(data);
       setLoading(false);

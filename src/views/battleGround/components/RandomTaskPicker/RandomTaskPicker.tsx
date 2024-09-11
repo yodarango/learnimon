@@ -6,62 +6,14 @@ import { IfElse } from "@ds";
 // styles
 import "./RandomTaskPicker.scss";
 
-interface Task {
+export type TChallenge = {
   description: string;
-  task: string;
+  challenge: string;
   id: number;
   difficulty: number;
   answer: string;
   timer: number;
-}
-
-const tasks: Task[] = [
-  {
-    description:
-      "Translate the following sentence to Spanish. <p class='color-chi'>The house is big</p>",
-    task: "La -- es --.",
-    answer: "La casa es grande",
-    id: 1,
-    difficulty: 2,
-    timer: 30,
-  },
-  {
-    description:
-      "Translate the following sentence to Spanish. <p class='color-chi'>The dog is black</p>",
-    task: "El -- es --.",
-    answer: "El perro es negro",
-    id: 2,
-    difficulty: 2,
-    timer: 25,
-  },
-  {
-    description:
-      "Translate the following sentence to Spanish. <p class='color-chi'>The apple is red</p>",
-    task: "La -- es --.",
-    answer: "La manzana es roja",
-    id: 3,
-    difficulty: 3,
-    timer: 20,
-  },
-  {
-    description:
-      "Translate the following sentence to Spanish. <p class='color-chi'>The car is fast</p>",
-    task: "El -- es --.",
-    answer: "El carro es rapido",
-    id: 4,
-    difficulty: 3,
-    timer: 35,
-  },
-  {
-    description:
-      "Translate the following sentence to Spanish. <p class='color-chi'>The tree is tall</p>",
-    task: "El -- es --.",
-    answer: "El arbol es alto",
-    id: 5,
-    difficulty: 4,
-    timer: 40,
-  },
-];
+};
 
 const ANSWER_IS_UNANSWERED = 0;
 const ANSWER_IS_INCORRECT = 2;
@@ -69,16 +21,16 @@ const ANSWER_IS_CORRECT = 1;
 
 export const RandomTaskPicker: React.FC = () => {
   const ctx = useBattleContext();
-  const { state, handleCorrect, handleWrong } = ctx;
-  const { pokemonStatus } = state;
+  const { state, handleCorrect, handleWrong, handleSelectTask } = ctx;
+  const { pokemonStatus, selectedTask = {} } = state;
 
   const [remainingTimeInPercentage, setRemainingTimeInPercentage] =
     useState<number>(0);
   const [answerInputs, setAnswerInputs] = useState<Record<string, string>>({});
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [correct, setCorrect] = useState<number>(ANSWER_IS_UNANSWERED);
   const [isSlideDown, setIsSlideDown] = useState<boolean>(false);
   const [remainingTime, setRemainingTime] = useState<number>(0);
+  // const [tasks, setTasks] = useState<TChallenge[]>([]);
 
   // countdown
   useEffect(() => {
@@ -108,7 +60,7 @@ export const RandomTaskPicker: React.FC = () => {
 
     const userAnswer = selectedTask.answer
       .split(" ")
-      .map((part, index) => {
+      .map((part: any, index: any) => {
         if (!!answerInputs[index])
           return part.replace(part.trim(), answerInputs[index]);
         return part;
@@ -128,9 +80,11 @@ export const RandomTaskPicker: React.FC = () => {
   }
 
   // Selects a random task from the list
-  function selectRandomTask() {
+  function selectRandomTask(tasks: TChallenge[] = []) {
+    if (tasks.length === 0) return;
+
     const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
-    setSelectedTask(randomTask);
+    handleSelectTask(randomTask);
     setRemainingTime(randomTask.timer);
     setAnswerInputs({});
     setCorrect(ANSWER_IS_UNANSWERED);
@@ -140,7 +94,19 @@ export const RandomTaskPicker: React.FC = () => {
     selectRandomTask();
   }, []);
 
+  useEffect(() => {
+    const tasksFromLocalStorage = localStorage.getItem("learnimon__challenges");
+
+    if (!tasksFromLocalStorage) return;
+
+    const tasks = JSON.parse(tasksFromLocalStorage!);
+
+    selectRandomTask(tasks);
+  }, []);
+
   const slideDownClass = isSlideDown ? "slide-down" : "";
+
+  console.log("selectedTask", selectedTask?.answer?.split(" "));
 
   if (pokemonStatus !== POKEMON_STATUS_FREE) return <></>;
 
@@ -171,27 +137,33 @@ export const RandomTaskPicker: React.FC = () => {
               dangerouslySetInnerHTML={{ __html: selectedTask.description }}
             />
             <div className='random-task-picker-82mv__task d-flex align-items-center justify-content-center flex-wrap'>
-              {selectedTask.task.split(" ").map((part, index) => {
-                return (
-                  <IfElse condition={part.includes("--")} key={index}>
-                    <input
-                      onChange={({ target: t }) =>
-                        handleInputChange(index, t.value)
-                      }
-                      value={answerInputs[index] || ""}
-                      className='p-4 d-inline-flex mx-2 fs-3 fw-8'
-                      disabled={correct !== ANSWER_IS_UNANSWERED}
-                      type='text'
-                      style={{
-                        width:
-                          selectedTask.answer.split(" ")[index].length * 20 +
-                          "px",
-                      }}
-                    />
-                    <h3 className='fs-3'>{part}</h3>
-                  </IfElse>
-                );
-              })}
+              {selectedTask.challenge
+                .trim()
+                .split(" ")
+                .map((part: any, index: any) => {
+                  const correctAnswerIndexLength =
+                    selectedTask.answer.split(" ")[index].length;
+                  return (
+                    <IfElse condition={part.includes("--")} key={index}>
+                      <input
+                        onChange={({ target: t }) =>
+                          handleInputChange(index, t.value)
+                        }
+                        value={answerInputs[index] || ""}
+                        className='p-2 d-inline-flex mx-2 fs-3 fw-8'
+                        disabled={correct !== ANSWER_IS_UNANSWERED}
+                        type='text'
+                        style={{
+                          width:
+                            correctAnswerIndexLength > 2
+                              ? correctAnswerIndexLength * 20 + "px"
+                              : correctAnswerIndexLength * 30 + "px",
+                        }}
+                      />
+                      <h3 className='fs-3'>{part}</h3>
+                    </IfElse>
+                  );
+                })}
             </div>
 
             <button

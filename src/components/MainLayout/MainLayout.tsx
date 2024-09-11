@@ -18,7 +18,7 @@ export const MainLayout: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
         <Link
           to={ROUTE_HOME_USERS}
           className={
-            "d-flex align-items-center justify-content-start color-alpha p-4 rounded mb-4 gap-2 " +
+            "d-flex align-items-center justify-content-start color-alpha p-2 rounded mb-4 gap-2 " +
             (currentTab === "users" ? "bg-zeta" : "bg-mu")
           }
         >
@@ -28,7 +28,7 @@ export const MainLayout: React.FC<HTMLProps<HTMLDivElement>> = (props) => {
         <Link
           to={ROUTE_HOME_CHALLENGES}
           className={
-            "d-flex align-items-center justify-content-start color-alpha p-4 rounded gap-2 " +
+            "d-flex align-items-center justify-content-start color-alpha p-2 rounded gap-2 " +
             (currentTab === "challenges" ? "bg-zeta" : "bg-mu")
           }
         >

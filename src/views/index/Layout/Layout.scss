@@ -1,10 +1,11 @@
 .layout-09lk {
-  width: 100%;
   max-width: 80rem;
+  padding-right: var(--dr-spacing-6);
+  width: 100%;
 
   .layout-09lk__users {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(30%, 15rem));
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
     grid-template-rows: auto;
     gap: var(--dr-spacing-4);
   }

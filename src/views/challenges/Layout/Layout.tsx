@@ -144,11 +144,9 @@ export const Layout = () => {
         </div>
         <div className='layout-99th__tasks'>
           {tasks.map((task) => (
-            <TaskCard
-              handleDelete={handleDeleteTask}
-              key={task.id}
-              task={task}
-            />
+            <div key={task.id} className='mb-4'>
+              <TaskCard handleDelete={handleDeleteTask} task={task} />
+            </div>
           ))}
         </div>
       </IfElse>

@@ -1,14 +1,18 @@
 import React, { HTMLProps, useEffect, useState } from "react";
+import { generatePath, useNavigate } from "react-router-dom";
 import { Menu, MenuButton, MenuItem } from "@mui/base";
 import { useBattleContext } from "@context";
+import { ROUTE_BATTLE } from "@constants";
 import { Dropdown, Thumbnail } from "@ds";
 
 // styles
 import "./Settings.scss";
 
 export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
-  const { handleSelectUser, state } = useBattleContext();
+  const { state, handleResetContext } = useBattleContext();
   const { selectedUser } = state;
+
+  const navigate = useNavigate();
 
   const [users, setUsers] = useState<Record<string, any>[]>([]);
 
@@ -18,6 +22,15 @@ export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
       setUsers(JSON.parse(users));
     }
   }, []);
+
+  const handleSelectUser = (user: Record<string, any>) => {
+    handleResetContext();
+
+    const userBattlePath = generatePath(ROUTE_BATTLE, {
+      name: String(user.name).replace(/\s/g, "-"),
+    });
+    navigate(userBattlePath);
+  };
 
   return (
     <div className='settings-20mn'>
@@ -31,8 +44,11 @@ export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
         </MenuButton>
 
         <Menu style={{ zIndex: 13 }} className='bg-beta'>
-          {users.map((user) => (
-            <MenuItem key={user.name} onClick={() => handleSelectUser(user)}>
+          {users.map((user, i) => (
+            <MenuItem
+              key={user.name + String(i)}
+              onClick={() => handleSelectUser(user)}
+            >
               <div className='d-flex align-items-center justify-content-start gap-2 p-4'>
                 <Thumbnail
                   src={user.avatar}
