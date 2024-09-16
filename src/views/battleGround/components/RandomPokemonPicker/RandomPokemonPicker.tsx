@@ -65,6 +65,7 @@ export const RandomPokemonPicker: React.FC = () => {
       setRandomNumber(number);
 
       const data = pokemonData[number];
+      data.id = number;
 
       // setPokemon(data);
       handlePokemonSelected(data);
@@ -110,6 +111,11 @@ export const RandomPokemonPicker: React.FC = () => {
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomNumber}.png`}
               alt={"pokemon.name"}
             />
+          </div>
+          <div className='random-pokemon-picker-19bt__monster--stats d-flex align-items-center justify-content-start gap-4 '>
+            <h4 className='color-beta fs-1 bg-alpha'>
+              Total Power: {pokemon?.value}
+            </h4>
           </div>
         </div>
       </If>

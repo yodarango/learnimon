@@ -24,12 +24,14 @@ export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
   }, []);
 
   const handleSelectUser = (user: Record<string, any>) => {
-    handleResetContext();
+    location.href = location.href.replace(/\/[^/]+$/, `/${user.name}`);
+    // TODO: This is not working 👇 FIX
 
-    const userBattlePath = generatePath(ROUTE_BATTLE, {
-      name: String(user.name).replace(/\s/g, "-"),
-    });
-    navigate(userBattlePath);
+    // handleResetContext();
+    // const userBattlePath = generatePath(ROUTE_BATTLE, {
+    //   name: String(user.name).replace(/\s/g, "-"),
+    // });
+    // navigate(userBattlePath);
   };
 
   return (

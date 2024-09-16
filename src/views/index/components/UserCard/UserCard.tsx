@@ -1,7 +1,7 @@
 import { generatePath, Link } from "react-router-dom";
 import { useBattleContext } from "@context";
 import React, { HTMLProps } from "react";
-import { ROUTE_USER } from "@constants";
+import { ROUTE_HOME_USERS_SINGLE } from "@constants";
 import { Button } from "@ds";
 
 // styles
@@ -16,7 +16,7 @@ export const UserCard: React.FC<HTMLProps<HTMLDivElement> & TUser> = (
   const { selectedUser } = state;
   const { user, handleDeleteUser, handleSelectUser } = props;
 
-  const profilePath = generatePath(ROUTE_USER, {
+  const profilePath = generatePath(ROUTE_HOME_USERS_SINGLE, {
     name: String(user.name).replace(/\s/g, "-"),
   });
 
@@ -33,9 +33,22 @@ export const UserCard: React.FC<HTMLProps<HTMLDivElement> & TUser> = (
       >
         <img src={user.avatar} alt={user.name} className='d-block' />
         <h4>{user.name}</h4>
-        <p>
-          <b className='color-theta'>Pokemons</b>: {user.pokemons.length}
-        </p>
+        <div className='d-flex align-items-center justify-content-start gap-2'>
+          <b className='color-theta'>Pokemons</b>:
+          {user.pokemons.map((pokemon: any, i: number) => (
+            <img
+              key={pokemon.name + String(i)}
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
+              alt={pokemon.name}
+              style={{
+                width: "50px",
+                height: "50px",
+                objectFit: "contain",
+                backgroundColor: "transparent",
+              }}
+            />
+          ))}
+        </div>
         <p>
           <b className='color-kappa'>Score:</b> {user.score}
         </p>
