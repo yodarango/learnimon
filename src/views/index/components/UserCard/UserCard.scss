@@ -3,11 +3,33 @@
   align-items: center;
   gap: var(--dr-spacing-2);
   margin-bottom: var(--dr-spacing-2);
+  overflow: hidden;
+  height: 15rem;
+
+  .user-card-55bb_placement {
+    height: 100%;
+    width: 5rem;
+  }
+
+  .user-card-55bb_actions {
+    height: 100%;
+    width: 5rem;
+
+    > div {
+      height: 50%;
+      width: 100%;
+
+      a,
+      button {
+        display: block;
+      }
+    }
+  }
 
   &:hover {
     transition: scale 500ms ease-in-out;
     cursor: pointer;
-    scale: 0.9;
+    scale: 0.97;
   }
   img {
     width: 10rem;

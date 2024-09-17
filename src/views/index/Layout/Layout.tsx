@@ -1,12 +1,13 @@
 import { IfElse, Input, Portal, Snackbar, Thumbnail, Toast } from "@ds";
 import { UserCard } from "../components/UserCard/UserCard";
 import ShroodEmpty from "@assets/images/shrood_empty.webp";
+import { getLocalStorageUsers } from "@utils";
 import { useEffect, useState } from "react";
+import { ROUTE_BATTLE } from "@constants";
 
 // styles
 import "./Layout.scss";
 import { generatePath, useNavigate } from "react-router-dom";
-import { ROUTE_BATTLE } from "@constants";
 
 export const Layout = () => {
   const navigate = useNavigate();
@@ -19,10 +20,8 @@ export const Layout = () => {
   });
 
   useEffect(() => {
-    const users = localStorage.getItem("learnimon__users");
-    if (users) {
-      setUsers(JSON.parse(users));
-    }
+    const users = getLocalStorageUsers();
+    setUsers(users);
   }, []);
 
   const handleAddNewUser = () => {
