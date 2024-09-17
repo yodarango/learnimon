@@ -1,5 +1,5 @@
 .users-id-96jk {
-  max-width: 80rem;
+  max-width: 101rem;
   padding-right: var(--dr-spacing-6);
   width: 100%;
 
@@ -9,5 +9,11 @@
     object-fit: cover;
     height: 8rem;
     width: 8rem;
+  }
+
+  .users-id-96jk__user-pokemons {
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    column-gap: var(--dr-spacing-4);
+    display: grid;
   }
 }

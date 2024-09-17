@@ -3,6 +3,7 @@ import {
   ROUTE_BATTLE,
   ROUTE_HOME_CHALLENGES,
   ROUTE_HOME_USERS_SINGLE,
+  ROUTE_HOME_USERS,
 } from "@constants";
 import { BattleContextProvider } from "@context";
 import { ViewBattleGround, ViewChallenges, ViewUsersId } from "@views/index";
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route path={ROUTE_BATTLE} element={<ViewBattleGround />} />
       <Route path={ROUTE_HOME_USERS_SINGLE} element={<ViewUsersId />} />
       <Route path={ROUTE_HOME} element={<ViewIndex />} />
+      <Route path={ROUTE_HOME_USERS} element={<ViewIndex />} />
     </Route>
   )
 );
