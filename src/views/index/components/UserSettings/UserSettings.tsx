@@ -1,28 +1,34 @@
 import { BADGE_CATCH, BADGE_IMMUNITY, BADGE_STEAL } from "@constants";
 import BadgeImmunity from "@assets/images/badges/badge_immunity.webp";
-import { generateRandomId, getUserFromLocalStorage } from "@utils";
 import BadgeSteal from "@assets/images/badges/badge_steal.webp";
 import BadgeCatch from "@assets/images/badges/badge_catch.webp";
 import { HTMLProps, useEffect, useState } from "react";
+import { generateRandomId } from "@utils";
 import update from "immutability-helper";
 import { Drawer } from "@components";
 
 // styles
 import "./UserSettings.scss";
 
+const badgeThumbs: Record<string, any> = {
+  immunity: BadgeImmunity,
+  steal: BadgeSteal,
+  catch: BadgeCatch,
+};
+
 const badgeTypes = [
   {
-    image: BadgeSteal,
+    imageUrl: "badge_steal.webp",
     name: "Steal",
     type: BADGE_STEAL,
   },
   {
-    image: BadgeCatch,
+    imageUrl: "badge_catch.webp",
     name: "Catch",
     type: BADGE_CATCH,
   },
   {
-    image: BadgeImmunity,
+    imageUrl: "badge_immunity.webp",
     name: "Immunity",
     type: BADGE_IMMUNITY,
   },
@@ -49,30 +55,19 @@ export const UserSettings = (props: UserSettingsProps) => {
     const userData = localStorage.getItem("learnimon__users");
     const parsedData = JSON.parse(userData || "[]");
 
-    const currentUser = getUserFromLocalStorage(String(user.name));
-
-    const findUser = parsedData.find(
-      (user: Record<string, any>) => user.name === currentUser.name
-    );
-
-    if (!findUser) {
-      return;
+    if (!user.badges) {
+      user.badges = [];
     }
 
-    if (!findUser.badges) {
-      findUser.badges = [];
-    }
+    user.badges.push(badge);
 
-    findUser.badges.push(badge);
-
-    const newUserData = parsedData.map((user: Record<string, any>) =>
-      user.name === findUser.name ? findUser : user
+    const newUserData = parsedData.map((u: Record<string, any>) =>
+      u.name === user.name ? user : u
     );
 
     localStorage.setItem("learnimon__users", JSON.stringify(newUserData));
 
     // update the state
-    console.log([badges[badge.type]], badge);
     setBadges(
       update(badges, {
         [badge.type]: {
@@ -87,39 +82,32 @@ export const UserSettings = (props: UserSettingsProps) => {
     const userData = localStorage.getItem("learnimon__users");
     const parsedData = JSON.parse(userData || "[]");
 
-    const currentUser = getUserFromLocalStorage(String(user.name));
-
-    const findUser = parsedData.find(
-      (user: Record<string, any>) => user.name === currentUser.name
-    );
-
-    if (!findUser) {
+    if (!user.badges || user.badges.length === 0) {
+      user.badges = [];
       return;
     }
 
-    if (!findUser.badges) {
-      findUser.badges = [];
-    }
-
     // remove only one badge of this type do not use id
-    const badgeIndex = findUser.badges.findIndex(
+    const badgeIndex = user.badges.findIndex(
       (userBadge: Record<string, any>) => userBadge.type === badge.type
     );
 
-    findUser.badges.splice(badgeIndex, 1);
+    console.log(badgeIndex);
+    if (badgeIndex > -1) {
+      user.badges.splice(badgeIndex, 1);
+    }
 
-    const newUserData = parsedData.map((user: Record<string, any>) =>
-      user.name === findUser.name ? findUser : user
+    const newUserData = parsedData.map((u: Record<string, any>) =>
+      u.name === user.name ? user : u
     );
 
     localStorage.setItem("learnimon__users", JSON.stringify(newUserData));
 
     // update the state
-    console.log(badge);
     setBadges(
       update(badges, {
         [badge.type]: {
-          $set: findUser.badges,
+          $set: user.badges.filter((b) => b.type === badge.type),
         },
       })
     );
@@ -166,7 +154,7 @@ export const UserSettings = (props: UserSettingsProps) => {
             >
               <div className='d-flex align-items-center justify-content-start gap-2 settings-20mn__badges-badge'>
                 <p className='settings-20mn__badge-name'>{badge.name}</p>
-                <img src={badge.image} alt='badge' />
+                <img src={badgeThumbs[badge.type]} alt='badge' />
               </div>
               <div className='ms-auto me-0 d-flex align-items-center justify-content-center gap-2'>
                 <button

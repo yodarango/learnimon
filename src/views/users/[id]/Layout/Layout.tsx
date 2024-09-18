@@ -9,6 +9,8 @@ export const Layout = () => {
   const { name } = useParams();
 
   const user = getUserFromLocalStorage(String(name));
+
+  console.log(user);
   return (
     <div className='users-id-96jk'>
       <section className='users-id-96jk__user-bio p-4 bg-mu rounded d-flex align-items-start justify-content-start gap-6 mb-6'>
@@ -23,10 +25,12 @@ export const Layout = () => {
         </div>
         <div className='users-id-user-bio-96jk_badges w-100'>
           {user.badges?.map((badge: Record<string, any>) => {
-            <div key={badge.id}>
-              <img src={badge.img} alt='badge' />
-              <p>{badge.name}</p>
-            </div>;
+            return (
+              <div key={badge.id}>
+                <img src={badge.img} alt='badge' />
+                <p>{badge.name}</p>
+              </div>
+            );
           })}
         </div>
       </section>

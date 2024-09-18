@@ -8,5 +8,3 @@ export function generateRandomId() {
   }
   return randomId;
 }
-
-console.log(generateRandomId());

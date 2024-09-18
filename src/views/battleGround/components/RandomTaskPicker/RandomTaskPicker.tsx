@@ -106,8 +106,6 @@ export const RandomTaskPicker: React.FC = () => {
 
   const slideDownClass = isSlideDown ? "slide-down" : "";
 
-  console.log("selectedTask", selectedTask?.answer?.split(" "));
-
   if (pokemonStatus !== POKEMON_STATUS_FREE) return <></>;
 
   return (

@@ -4,8 +4,6 @@ import "./PokemonCard.scss";
 export const PokemonCard = (props: { pokemon: Record<string, any> }) => {
   const { pokemon } = props;
 
-  console.log(pokemon);
-
   const colors = [
     "bg-sigma",
     "bg-tau",
