@@ -1,0 +1,15 @@
+.settings-20mn {
+  position: relative;
+  .settings-20mn__badges {
+    .settings-20mn__badges-badge img {
+      object-position: center;
+      object-fit: contain;
+      height: 12rem;
+      width: 12rem;
+    }
+
+    .settings-20mn__badge-name {
+      min-width: 10rem;
+    }
+  }
+}

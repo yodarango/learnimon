@@ -2,18 +2,18 @@
   display: flex;
   align-items: center;
   gap: var(--dr-spacing-2);
-  margin-bottom: var(--dr-spacing-2);
-  overflow: hidden;
-  height: 15rem;
+  height: 16rem;
 
   .user-card-55bb_placement {
+    border-top-left-radius: var(--dr-spacing-2);
+    border-bottom-left-radius: var(--dr-spacing-2);
     height: 100%;
     width: 5rem;
   }
 
   .user-card-55bb_actions {
+    overflow: hidden;
     height: 100%;
-    width: 5rem;
 
     > div {
       height: 50%;
@@ -21,8 +21,15 @@
 
       a,
       button {
-        display: block;
+        text-decoration: none;
+        height: 100%;
       }
+    }
+    > div:first-child {
+      border-top-right-radius: var(--dr-spacing-2);
+    }
+    > div:last-child {
+      border-bottom-right-radius: var(--dr-spacing-2);
     }
   }
 

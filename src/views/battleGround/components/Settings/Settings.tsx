@@ -1,8 +1,7 @@
 import React, { HTMLProps, useEffect, useState } from "react";
-import { generatePath, useNavigate } from "react-router-dom";
 import { Menu, MenuButton, MenuItem } from "@mui/base";
+import { useNavigate } from "react-router-dom";
 import { useBattleContext } from "@context";
-import { ROUTE_BATTLE } from "@constants";
 import { Dropdown, Thumbnail } from "@ds";
 
 // styles

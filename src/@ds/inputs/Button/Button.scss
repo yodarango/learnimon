@@ -18,7 +18,7 @@
   box-shadow: var(--dr-box-shadow);
 }
 
-.base-Button-root.default {
+.base-Button-root.default:not([class^="p-"]) {
   padding: 0;
 }
 

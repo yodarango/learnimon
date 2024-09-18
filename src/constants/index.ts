@@ -7,3 +7,7 @@ export const ROUTE_HOME_CHALLENGES = ROUTE_HOME + "/challenges";
 export const ROUTE_HOME_USERS = ROUTE_HOME + "/users";
 export const ROUTE_HOME_USERS_SINGLE = ROUTE_HOME + "/users/:name";
 export const ROUTE_BATTLE = ROUTE_HOME + "/battle/:name";
+
+export const BADGE_STEAL = "steal";
+export const BADGE_CATCH = "catch";
+export const BADGE_IMMUNITY = "immunity";
