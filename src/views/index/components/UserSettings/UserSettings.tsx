@@ -92,7 +92,6 @@ export const UserSettings = (props: UserSettingsProps) => {
       (userBadge: Record<string, any>) => userBadge.type === badge.type
     );
 
-    console.log(badgeIndex);
     if (badgeIndex > -1) {
       user.badges.splice(badgeIndex, 1);
     }
@@ -107,7 +106,9 @@ export const UserSettings = (props: UserSettingsProps) => {
     setBadges(
       update(badges, {
         [badge.type]: {
-          $set: user.badges.filter((b) => b.type === badge.type),
+          $set: user.badges.filter(
+            (b: Record<string, any>) => b.type === badge.type
+          ),
         },
       })
     );

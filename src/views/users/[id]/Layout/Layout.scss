@@ -7,13 +7,20 @@
     object-position: center;
     border-radius: 50%;
     object-fit: cover;
-    height: 8rem;
-    width: 8rem;
+    height: 15rem;
+    width: 15rem;
   }
 
   .users-id-96jk__user-pokemons {
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
     column-gap: var(--dr-spacing-4);
     display: grid;
+  }
+
+  .users-id-user-bio-96jk_badges {
+    img {
+      height: 10rem;
+      width: 10rem;
+    }
   }
 }
