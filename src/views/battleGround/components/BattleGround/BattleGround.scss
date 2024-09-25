@@ -42,12 +42,8 @@
   }
 
   .battle-ground-11jt__container {
-    position: absolute;
+    position: relative;
     z-index: 3;
-    height: auto;
-    width: 100vw;
-    bottom: 0;
-    top: auto;
 
     .battle-ground-11jt__settings {
       position: fixed;

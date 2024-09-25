@@ -1,14 +1,10 @@
 .random-pokemon-picker-19bt {
+  position: relative;
   .random-pokemon-picker-19bt__loading-animation,
   .random-pokemon-picker-19bt__monster {
-    position: absolute;
     max-width: 25rem;
     display: block;
     margin: auto;
-    bottom: auto;
-    top: 5rem;
-    right: 0;
-    left: 0;
     // ------ glow effect ------ //
     position: absolute;
     height: auto;
@@ -20,7 +16,7 @@
     filter: drop-shadow(0 0 10px var(--dr-alpha))
       drop-shadow(0 0 20px var(--dr-alpha))
       drop-shadow(0 0 30px var(--dr-alpha));
-    z-index: -1;
+    // z-index: -1;
 
     h3 {
       left: calc(-50vw + 50%);

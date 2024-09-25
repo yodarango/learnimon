@@ -41,48 +41,53 @@ export const Layout = () => {
   return (
     <BattleGround hasChallenges={challenges.length > 0}>
       <IfElse condition={!isReady}>
-        <div className='layout15-kc__ready'>
-          <Button
-            onClick={handleIsReady}
-            primary
-            className='w-100'
-            maxWidth={200}
-          >
-            Start
-          </Button>
-          <h1 className='text-center'>Are you ready?</h1>
-        </div>
-        <>
-          <RandomPokemonPicker />
-          <If
-            condition={
-              !!selectedPokemon && pokemonStatus === POKEMON_STATUS_FREE
-            }
-          >
-            <RandomTaskPicker />
-          </If>
-        </>
-      </IfElse>
-      <IfElse condition={pokemonStatus === POKEMON_STATUS_FREE}>
-        <div className='battle-ground-11jt__character'>
-          <div className='battle-ground-11jt__sphere'>
-            <img src={sphere} alt='pokeball' />
+        <div className='layout15-kc__ready d-flex align-items-center justify-content-center'>
+          <div>
+            <Button
+              onClick={handleIsReady}
+              primary
+              className='w-100 mx-auto'
+              maxWidth={200}
+            >
+              Start
+            </Button>
+            <h1 className='text-center'>Are you ready?</h1>
           </div>
-          <img src={ashe} alt='hunter of monsters' />
         </div>
-        <IfElse condition={pokemonStatus === POKEMON_STATUS_CAUGHT}>
-          <h1>
-            <span className='d-inline-block me-6'>
-              {selectedPokemon?.pokemon?.name}
-            </span>{" "}
-            is yours!
-          </h1>
-          <h1>
-            <span className='d-inline-block me-6'>
-              {selectedPokemon?.pokemon?.name}
-            </span>{" "}
-            has escaped
-          </h1>
+
+        <IfElse condition={pokemonStatus === POKEMON_STATUS_FREE}>
+          <div className='d-flex align-items-center justify-content-between'>
+            <div className='battle-ground-11jt__character'>
+              <div className='battle-ground-11jt__sphere'>
+                <img src={sphere} alt='pokeball' />
+              </div>
+              <img src={ashe} alt='hunter of monsters' />
+            </div>
+            <If condition={isReady}>
+              <RandomPokemonPicker />
+              <If
+                condition={
+                  !!selectedPokemon && pokemonStatus === POKEMON_STATUS_FREE
+                }
+              >
+                <RandomTaskPicker />
+              </If>
+            </If>
+          </div>
+          <IfElse condition={pokemonStatus === POKEMON_STATUS_CAUGHT}>
+            <h1>
+              <span className='d-inline-block me-6'>
+                {selectedPokemon?.pokemon?.name}
+              </span>{" "}
+              is yours!
+            </h1>
+            <h1>
+              <span className='d-inline-block me-6'>
+                {selectedPokemon?.pokemon?.name}
+              </span>{" "}
+              has escaped
+            </h1>
+          </IfElse>
         </IfElse>
       </IfElse>
     </BattleGround>
