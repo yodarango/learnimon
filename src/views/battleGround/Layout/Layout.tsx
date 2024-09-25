@@ -4,8 +4,13 @@ import {
   TChallenge,
 } from "../components/RandomTaskPicker/RandomTaskPicker";
 import { BattleGround } from "../components/BattleGround/BattleGround";
-import { POKEMON_STATUS_FREE, useBattleContext } from "@context";
-import { Settings } from "../components/Settings/Settings";
+import {
+  POKEMON_STATUS_CAUGHT,
+  POKEMON_STATUS_FREE,
+  useBattleContext,
+} from "@context";
+import sphere from "@assets/images/pokeball.png";
+import ashe from "@assets/images/ashe.webp";
 import { useEffect, useState } from "react";
 import { Button, If, IfElse } from "@ds";
 
@@ -29,22 +34,12 @@ export const Layout = () => {
     }
   }, []);
 
-  if (challenges.length === 0) {
-    return (
-      <BattleGround>
-        <Settings />
-        <h1 className='text-center'>No challenges available</h1>
-      </BattleGround>
-    );
-  }
-
   const handleIsReady = () => {
     setIsReady(true);
   };
 
   return (
-    <BattleGround>
-      <Settings />
+    <BattleGround hasChallenges={challenges.length > 0}>
       <IfElse condition={!isReady}>
         <div className='layout15-kc__ready'>
           <Button
@@ -67,6 +62,28 @@ export const Layout = () => {
             <RandomTaskPicker />
           </If>
         </>
+      </IfElse>
+      <IfElse condition={pokemonStatus === POKEMON_STATUS_FREE}>
+        <div className='battle-ground-11jt__character'>
+          <div className='battle-ground-11jt__sphere'>
+            <img src={sphere} alt='pokeball' />
+          </div>
+          <img src={ashe} alt='hunter of monsters' />
+        </div>
+        <IfElse condition={pokemonStatus === POKEMON_STATUS_CAUGHT}>
+          <h1>
+            <span className='d-inline-block me-6'>
+              {selectedPokemon?.pokemon?.name}
+            </span>{" "}
+            is yours!
+          </h1>
+          <h1>
+            <span className='d-inline-block me-6'>
+              {selectedPokemon?.pokemon?.name}
+            </span>{" "}
+            has escaped
+          </h1>
+        </IfElse>
       </IfElse>
     </BattleGround>
   );

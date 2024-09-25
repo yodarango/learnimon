@@ -75,13 +75,13 @@ export const UserCard: React.FC<HTMLProps<HTMLDivElement> & TUser> = (
           {/* stats */}
           <div className='w-100'>
             <div className='d-flex align-items-center justify-content-start'>
-              <b className='color-theta'>Pokemons</b>: {user.pokemons.length}
+              <b className='color-theta'>Pokemons</b>: {user.pokemons?.length}
             </div>
             <p>
               <b className='color-kappa'>Score:</b> {user.score}
             </p>
             <p>
-              <b className='color-phi'>Badges:</b> {user.badges.length}
+              <b className='color-phi'>Badges:</b> {user.badges?.length}
             </p>
           </div>
 

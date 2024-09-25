@@ -1,0 +1,17 @@
+.glow-title-2mm {
+  font-size: 5rem;
+  text-shadow: 0 0 5px var(--dr-alpha), 0 0 10px var(--dr-alpha),
+    0 0 20px var(--dr-eta), 0 0 30px var(--dr-eta), 0 0 40px var(--dr-eta),
+    0 0 50px var(--dr-eta), 0 0 60px var(--dr-eta), 0 0 70px var(--dr-eta);
+
+  span {
+    text-shadow: 0 0 5px var(--dr-alpha), 0 0 10px var(--dr-alpha),
+      0 0 20px var(--dr-theta), 0 0 30px var(--dr-theta),
+      0 0 40px var(--dr-theta), 0 0 50px var(--dr-theta),
+      0 0 60px var(--dr-theta), 0 0 70px var(--dr-theta);
+  }
+
+  &:hover {
+    animation: glow 1.5s ease-in-out infinite alternate;
+  }
+}
