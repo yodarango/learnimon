@@ -14,7 +14,6 @@ import { pokemonData } from "@data";
 import {
   POKEMON_STATUS_CAUGHT,
   POKEMON_STATUS_ESCAPED,
-  POKEMON_STATUS_FREE,
   useBattleContext,
 } from "@context";
 import React, { useEffect, useState } from "react";
@@ -94,9 +93,6 @@ export const RandomPokemonPicker: React.FC = () => {
 
       <If condition={!!pokemon}>
         <div className='random-pokemon-picker-19bt__monster'>
-          <If condition={pokemonStatus === POKEMON_STATUS_FREE}>
-            <h3 className='text-center'>{pokemon?.name}</h3>
-          </If>
           <aside className='random-pokemon-picker-19bt__monster--pokeball'>
             <img src={PokeballTop} alt='pokeball top' />
             <img src={PokeballBottom} alt='pokeball bottom' />
@@ -111,11 +107,6 @@ export const RandomPokemonPicker: React.FC = () => {
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomNumber}.png`}
               alt={"pokemon.name"}
             />
-          </div>
-          <div className='random-pokemon-picker-19bt__monster--stats d-flex align-items-center justify-content-start gap-4 '>
-            <h4 className='color-beta fs-1 bg-alpha'>
-              Total Power: {pokemon?.value}
-            </h4>
           </div>
         </div>
       </If>

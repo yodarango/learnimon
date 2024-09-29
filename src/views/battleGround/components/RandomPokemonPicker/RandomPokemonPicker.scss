@@ -1,12 +1,8 @@
 .random-pokemon-picker-19bt {
-  position: relative;
   .random-pokemon-picker-19bt__loading-animation,
   .random-pokemon-picker-19bt__monster {
     max-width: 25rem;
     display: block;
-    margin: auto;
-    // ------ glow effect ------ //
-    position: absolute;
     height: auto;
     width: 100%;
     content: "";
@@ -16,24 +12,23 @@
     filter: drop-shadow(0 0 10px var(--dr-alpha))
       drop-shadow(0 0 20px var(--dr-alpha))
       drop-shadow(0 0 30px var(--dr-alpha));
-    // z-index: -1;
 
-    h3 {
-      left: calc(-50vw + 50%);
-      position: relative;
-      width: 99.7vw;
-      font-size: 8rem;
-      color: var(--dr-alpha);
-      text-shadow: 0 0 5px var(--dr-alpha), 0 0 10px var(--dr-alpha),
-        0 0 20px var(--dr-theta), 0 0 30px var(--dr-theta),
-        0 0 40px var(--dr-theta), 0 0 50px var(--dr-theta),
-        0 0 60px var(--dr-theta), 0 0 70px var(--dr-theta);
-    }
+    // h3 {
+    //   left: calc(-50vw + 50%);
+    //   position: relative;
+    //   width: 99.7vw;
+    //   font-size: 8rem;
+    //   color: var(--dr-alpha);
+    //   text-shadow: 0 0 5px var(--dr-alpha), 0 0 10px var(--dr-alpha),
+    //     0 0 20px var(--dr-theta), 0 0 30px var(--dr-theta),
+    //     0 0 40px var(--dr-theta), 0 0 50px var(--dr-theta),
+    //     0 0 60px var(--dr-theta), 0 0 70px var(--dr-theta);
+    // }
 
-    /* Optional animation to make the glow pulsate */
-    h3:hover {
-      animation: glow 1.5s ease-in-out infinite alternate;
-    }
+    // /* Optional animation to make the glow pulsate */
+    // h3:hover {
+    //   animation: glow 1.5s ease-in-out infinite alternate;
+    // }
 
     @keyframes glow {
       from {
