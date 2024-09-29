@@ -21,8 +21,26 @@ export const RandomTaskPicker: React.FC = () => {
 
   const [remainingTimeInPercentage, setRemainingTimeInPercentage] =
     useState<number>(0);
-
   const [remainingTime, setRemainingTime] = useState<number>(0);
+
+  // Selects a random task from the list in the local storage
+  function selectRandomTask(tasks: TChallenge[] = []) {
+    if (tasks.length === 0) return;
+
+    const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
+    setRemainingTime(randomTask.timer);
+    handleSelectTask(randomTask);
+  }
+
+  useEffect(() => {
+    const tasksFromLocalStorage = localStorage.getItem("learnimon__challenges");
+
+    if (!tasksFromLocalStorage) return;
+
+    const tasks = JSON.parse(tasksFromLocalStorage!);
+
+    selectRandomTask(tasks);
+  }, []);
 
   // countdown
   useEffect(() => {
@@ -45,10 +63,11 @@ export const RandomTaskPicker: React.FC = () => {
         className='random-task-picker-82mv__timer'
         style={{ width: `${remainingTimeInPercentage}%` }}
       />
-      {selectedTask && (
+
+      {/* eventually this will need to be conditionally render based on the type of challenge */}
+      {selectedTask?.id && (
         <FillInTheBlankChallenge
           onRemainingTime={setRemainingTime}
-          onSelected={handleSelectTask}
           selectedTask={selectedTask}
           onCorrect={handleCorrect}
           onWrong={handleWrong}

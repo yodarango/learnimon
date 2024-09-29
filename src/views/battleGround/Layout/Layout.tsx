@@ -40,8 +40,6 @@ export const Layout = () => {
     setIsReady(true);
   };
 
-  console.log("challenges", selectedPokemon);
-
   // after the pokemon is selected, the user can start the challenge
   useEffect(() => {
     setTimeout(() => {

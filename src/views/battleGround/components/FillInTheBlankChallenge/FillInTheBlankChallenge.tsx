@@ -1,12 +1,10 @@
 // styles
-import { useEffect, useState } from "react";
 import "./FillInTheBlankChallenge.scss";
-import { TChallenge } from "../RandomTaskPicker/RandomTaskPicker";
-import { IfElse } from "@ds";
+import { useState } from "react";
+import { Button, IfElse } from "@ds";
 
 type FillInTheBlankChallengeProps = {
   onRemainingTime: (time: number) => void;
-  onSelected: (task: TChallenge) => void;
   onCorrect: () => void;
   onWrong: () => void;
   selectedTask: any;
@@ -22,8 +20,7 @@ export const FillInTheBlankChallenge = (
   const [answerInputs, setAnswerInputs] = useState<Record<string, string>>({});
   const [correct, setCorrect] = useState<number>(ANSWER_IS_UNANSWERED);
 
-  const { onCorrect, onWrong, onRemainingTime, onSelected, selectedTask } =
-    props;
+  const { onCorrect, onWrong, selectedTask } = props;
 
   const handleInputChange = (idex: number, value: string) => {
     const newInputs = { ...answerInputs };
@@ -55,27 +52,6 @@ export const FillInTheBlankChallenge = (
       onWrong();
     }
   }
-
-  // Selects a random task from the list in the local storage
-  function selectRandomTask(tasks: TChallenge[] = []) {
-    if (tasks.length === 0) return;
-
-    const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
-    onRemainingTime(randomTask.timer);
-    setCorrect(ANSWER_IS_UNANSWERED);
-    onSelected(randomTask);
-    setAnswerInputs({});
-  }
-
-  useEffect(() => {
-    const tasksFromLocalStorage = localStorage.getItem("learnimon__challenges");
-
-    if (!tasksFromLocalStorage) return;
-
-    const tasks = JSON.parse(tasksFromLocalStorage!);
-
-    selectRandomTask(tasks);
-  }, []);
 
   return (
     <div className='fill-in-the-blank-11ta'>
@@ -114,13 +90,15 @@ export const FillInTheBlankChallenge = (
             })}
         </div>
 
-        <button
-          onClick={checkAnswer}
+        <Button
           disabled={correct !== ANSWER_IS_UNANSWERED}
-          className='m-auto d-block mt-4 bg-nu color-alpha fw-8 fs-1'
+          className='m-auto w-100 mt-6 fw-8 fs-1'
+          onClick={checkAnswer}
+          maxWidth={"20rem"}
+          primary
         >
-          <u>Submit</u>
-        </button>
+          Submit
+        </Button>
       </div>
     </div>
   );
