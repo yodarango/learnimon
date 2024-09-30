@@ -1,3 +1,4 @@
+export { PokemonStatsCard } from "./PokemonStatsCard/PokemonStatsCard";
 export { ModalHeader } from "./ModalHeader/ModalHeader";
 export { MainLayout } from "./MainLayout/MainLayout";
 export { GlowTitle } from "./GlowTitle/GlowTitle";

@@ -80,17 +80,17 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
       status === POKEMON_STATUS_CAUGHT &&
       state.selectedTask?.id
     ) {
-      const newChallenges = parsedChallenges.filter(
-        (challenge: Record<string, any>) =>
-          challenge.id !== state.selectedTask!.id
-      );
-
-      localStorage.setItem(
-        "learnimon__challenges",
-        JSON.stringify(newChallenges)
-      );
+      // const newChallenges = parsedChallenges.filter(
+      //   (challenge: Record<string, any>) =>
+      //     challenge.id !== state.selectedTask!.id
+      // );
+      // localStorage.setItem(
+      //   "learnimon__challenges",
+      //   JSON.stringify(newChallenges)
+      // );
     }
 
+    console.log("STATUS", status);
     setState((prevState) =>
       update(prevState, {
         pokemonStatus: {

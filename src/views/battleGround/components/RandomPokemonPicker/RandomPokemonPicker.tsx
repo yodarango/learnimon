@@ -8,15 +8,9 @@ import Pokemon48 from "@assets/images/defaultPokemons/pokemon_48.png";
 import Pokemon51 from "@assets/images/defaultPokemons/pokemon_51.png";
 import Pokemon99 from "@assets/images/defaultPokemons/pokemon_99.png";
 import Pokemon1 from "@assets/images/defaultPokemons/pokemon_1.png";
-import PokeballBottom from "@assets/images/pokeball_bottom.png";
-import PokeballTop from "@assets/images/pokeball_top.png";
-import { pokemonData } from "@data";
-import {
-  POKEMON_STATUS_CAUGHT,
-  POKEMON_STATUS_ESCAPED,
-  useBattleContext,
-} from "@context";
 import React, { useEffect, useState } from "react";
+import { useBattleContext } from "@context";
+import { pokemonData } from "@data";
 import { If } from "@ds";
 
 // styles
@@ -27,7 +21,7 @@ export type TPokemon = Record<string, any>;
 export const RandomPokemonPicker: React.FC = () => {
   const ctx = useBattleContext();
   const { state, handlePokemonSelected } = ctx;
-  const { pokemonStatus, selectedPokemon: pokemon } = state;
+  const { selectedPokemon: pokemon } = state;
 
   const [randomNumber, setRandomNumber] = useState<number | null>(null);
   const [animationIndex, setAnimationIndex] = useState<number>(0);
@@ -72,40 +66,30 @@ export const RandomPokemonPicker: React.FC = () => {
     }, 3000);
   };
 
-  const caughtClass =
-    pokemonStatus === POKEMON_STATUS_CAUGHT
-      ? "caught"
-      : pokemonStatus === POKEMON_STATUS_ESCAPED
-      ? "escaped"
-      : "";
-
   useEffect(() => {
     getRandomPokemon();
   }, []);
 
   return (
-    <div className={"random-pokemon-picker-19bt " + caughtClass}>
+    <div className={"random-pokemon-picker-19bt "}>
+      {/* Loading animation that iterates over the Pokemon images to mimic a randomized selection */}
       {loading && (
         <div className='random-pokemon-picker-19bt__loading-animation'>
           <img src={images[animationIndex]} alt='Loading animation' />
         </div>
       )}
 
+      {/* Loading animation that iterates over the Pokemon images to mimic a randomized selection */}
       <If condition={!!pokemon}>
         <div className='random-pokemon-picker-19bt__monster'>
-          <aside className='random-pokemon-picker-19bt__monster--pokeball'>
-            <img src={PokeballTop} alt='pokeball top' />
-            <img src={PokeballBottom} alt='pokeball bottom' />
-          </aside>
           <div
             className={
-              "random-pokemon-picker-19bt__monster--monster d-flex align-items-start justify-content-center " +
-              caughtClass
+              "random-pokemon-picker-19bt__monster--monster d-flex align-items-start justify-content-center"
             }
           >
             <img
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${randomNumber}.png`}
-              alt={"pokemon.name"}
+              alt={pokemon?.name || "A cartoon monster"}
             />
           </div>
         </div>

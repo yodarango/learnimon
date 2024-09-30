@@ -1,8 +1,17 @@
-// styles
-import "./PokemonCard.scss";
+import { If } from "@ds";
 
-export const PokemonCard = (props: { pokemon: Record<string, any> }) => {
-  const { pokemon } = props;
+// styles
+import "./PokemonStatsCard.scss";
+
+type PokemonStatsCardProps = {
+  pokemon: Record<string, any>;
+  includeTotalValue?: boolean;
+  includeThumb?: boolean;
+};
+export const PokemonStatsCard = (props: PokemonStatsCardProps) => {
+  const { pokemon, includeThumb, includeTotalValue } = props;
+
+  console.log("pokemon", pokemon);
 
   const colors = [
     "bg-sigma",
@@ -31,13 +40,15 @@ export const PokemonCard = (props: { pokemon: Record<string, any> }) => {
   //   normal: "#F5F5F5",
   // };
   return (
-    <article className='pokemon-card-18ht rounded p-4 d-flex align-items-center justify-content-center'>
-      <div className='pokemon-card-18ht__avatar flex-shrink-0'>
-        <img
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
-          alt={pokemon.name}
-        />
-      </div>
+    <article className='pokemon-card-18ht bg-beta rounded p-4 d-flex align-items-center justify-content-center'>
+      <If condition={!!includeThumb}>
+        <div className='pokemon-card-18ht__avatar flex-shrink-0'>
+          <img
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+            alt={pokemon.name}
+          />
+        </div>
+      </If>
 
       <div className='pokemon-card-18ht__stats w-100'>
         {pokemon.stats.map((stat: Record<string, any>, index: number) => (
@@ -53,6 +64,9 @@ export const PokemonCard = (props: { pokemon: Record<string, any> }) => {
             </div>
           </div>
         ))}
+        <If condition={!!includeTotalValue}>
+          <h3 className='mt-2'>Power: {pokemon.value}</h3>
+        </If>
       </div>
     </article>
   );

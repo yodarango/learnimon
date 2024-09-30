@@ -32,6 +32,7 @@ export const RandomTaskPicker: React.FC = () => {
     handleSelectTask(randomTask);
   }
 
+  // get the tasks from the local storage and call the selectRandomTask function
   useEffect(() => {
     const tasksFromLocalStorage = localStorage.getItem("learnimon__challenges");
 

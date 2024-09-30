@@ -9,44 +9,124 @@
 }
 
 .battle-ground-11jt__duel {
+  position: relative;
+  max-width: 140rem;
   height: 100vh;
   margin: auto;
   width: 94vw;
-  max-width: 140rem;
   bottom: 0;
 
+  //  the character catchinq the pokemon
   .battle-ground-11jt__challenger {
     position: relative;
-    margin-bottom: 5vh;
+    margin-bottom: 5rem;
     margin-top: auto;
-    height: 20vw;
-    width: 20vw;
+    height: 30rem;
+    width: 30rem;
+    z-index: 3;
 
     .character-11jt__character {
-      position: absolute;
       display: block;
       width: 100%;
-      z-index: 2;
+      z-index: 3;
       bottom: 0;
       top: auto;
       left: 0;
     }
+  }
 
-    .battle-ground-11jt__sphere {
+  .battle-ground-11jt__ball {
+    position: absolute;
+    display: block;
+    height: 5rem;
+    width: 5rem;
+    z-index: 2;
+    left: 5rem;
+    bottom: 25vh;
+    animation: ballCatchPokemon 1000ms cubic-bezier(0.075, 0.82, 0.165, 1)
+      forwards;
+
+    img {
+      object-position: center;
+      object-fit: contain;
       position: absolute;
       display: block;
-      width: 5rem;
-      right: -1rem;
-      top: 5.5rem;
-      z-index: 3;
+      margin: auto;
+      width: 100%;
+
+      &:last-child {
+        z-index: 1;
+        animation: openPokeballBottom 1000ms 1000ms ease-in-out forwards;
+      }
+
+      &:first-child {
+        z-index: 2;
+        animation: openPokeballTop 1000ms 1000ms ease-in-out forwards;
+      }
+    }
+  }
+
+  @keyframes ballCatchPokemon {
+    0% {
+      left: 0;
+    }
+    100% {
+      // 100 - ball width (when grown to 30rem) - half of the pokemon width
+      left: calc(100% - 15rem - (min(100%, 25rem) / 2));
+      bottom: 30vh;
+    }
+  }
+
+  @keyframes openPokeballTop {
+    0% {
+      top: -10rem;
+    }
+    80% {
+      height: 30rem;
+      width: 30rem;
+    }
+    100% {
+      height: 30rem;
+      width: 30rem;
+      top: 0;
+    }
+  }
+
+  @keyframes openPokeballBottom {
+    0% {
+      top: 10rem;
+    }
+    80% {
+      height: 30rem;
+      width: 30rem;
+    }
+    100% {
+      height: 30rem;
+      width: 30rem;
+      top: 0;
     }
   }
 
   // the user opposite the challenger catching the pokemon
   .battle-ground-11jt__challengee {
+    margin: auto 0 5rem auto;
     position: relative;
-    margin-bottom: 10vh;
-    margin-top: auto;
+    width: 25rem;
+
+    @keyframes exitToRight {
+      0% {
+        left: 0;
+      }
+      100% {
+        left: 100vw;
+      }
+    }
+
+    &.caught {
+      transition: width 500ms ease 2000ms, margin 500ms ease 2000ms;
+      width: 15rem;
+      margin: auto 10rem 15rem auto;
+    }
   }
 
   //  the task modal
@@ -65,5 +145,33 @@
       max-width: 100rem;
       width: 92%;
     }
+  }
+
+  .battle-ground-11jt__pokemon-stats-card {
+    position: absolute;
+    max-width: 30rem;
+    margin: auto;
+    scale: 0.8;
+    width: 90%;
+    right: 0;
+    top: -2%;
+  }
+}
+
+//  the task modal
+.battle-ground-11jt__task {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 4;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+
+  > div {
+    margin: 5rem auto 0;
+    max-width: 100rem;
+    width: 92%;
   }
 }

@@ -1,8 +1,7 @@
 // styles
-import { Drawer } from "@components";
-import { PokemonCard } from "../PokemonCard/PokemonCard";
-import "./PokemonThumb.scss";
+import { Drawer, PokemonStatsCard } from "@components";
 import { HTMLProps, useState } from "react";
+import "./PokemonThumb.scss";
 
 type PokemonThumbProps = {
   pokemon: Record<string, any>;
@@ -20,7 +19,7 @@ export const PokemonThumb = (props: PokemonThumbProps) => {
         onClose={() => setIsOpen(false)}
         title={`${pokemon.name} (${pokemon.value})`}
       >
-        <PokemonCard pokemon={pokemon} />
+        <PokemonStatsCard pokemon={pokemon} />
       </Drawer>
       <button
         className={
