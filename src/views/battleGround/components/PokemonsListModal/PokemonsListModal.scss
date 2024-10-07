@@ -1,0 +1,25 @@
+.pokemons-list-modal-49bq {
+  height: 100%;
+  width: 100%;
+
+  .users-id-96jk__user-pokemons {
+    height: 100%;
+
+    .pokemons-96jk__user-pokemons-list {
+      overflow-y: scroll;
+      height: 100%;
+
+      .pokemons-96jk__user-pokemons-grid {
+        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+        justify-content: center;
+        display: grid;
+        height: 100%;
+        gap: 20px;
+      }
+    }
+    .users-id-96jk__user-pokemons-pokemon {
+      padding-top: 5rem;
+      width: 30rem;
+    }
+  }
+}

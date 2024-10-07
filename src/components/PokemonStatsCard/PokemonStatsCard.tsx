@@ -11,8 +11,6 @@ type PokemonStatsCardProps = {
 export const PokemonStatsCard = (props: PokemonStatsCardProps) => {
   const { pokemon, includeThumb, includeTotalValue } = props;
 
-  console.log("pokemon", pokemon);
-
   const colors = [
     "bg-sigma",
     "bg-tau",

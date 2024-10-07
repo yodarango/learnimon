@@ -8,6 +8,16 @@
   top: 0;
 }
 
+.layout15-kc__pokemon-list-modal {
+  overflow: hidden;
+  position: fixed;
+  height: 90vh;
+  width: 90vw;
+  margin: auto;
+  z-index: 4;
+  inset: 0;
+}
+
 .battle-ground-11jt__duel {
   position: relative;
   max-width: 140rem;
@@ -44,7 +54,9 @@
     left: 5rem;
     bottom: 25vh;
     animation: ballCatchPokemon 1000ms cubic-bezier(0.075, 0.82, 0.165, 1)
-      forwards;
+        forwards,
+      ballCatchPokemonReturn 1000ms 2000ms cubic-bezier(0.075, 0.82, 0.165, 1)
+        forwards;
 
     img {
       object-position: center;
@@ -56,12 +68,14 @@
 
       &:last-child {
         z-index: 1;
-        animation: openPokeballBottom 1000ms 1000ms ease-in-out forwards;
+        animation: openPokeballBottom 1000ms 1000ms ease-in-out forwards,
+          closePokeballBottom 1000ms 2000ms ease-in-out forwards;
       }
 
       &:first-child {
         z-index: 2;
-        animation: openPokeballTop 1000ms 1000ms ease-in-out forwards;
+        animation: openPokeballTop 1000ms 1000ms ease-in-out forwards,
+          closePokeballTop 1000ms 2000ms ease-in-out forwards;
       }
     }
   }
@@ -74,6 +88,17 @@
       // 100 - ball width (when grown to 30rem) - half of the pokemon width
       left: calc(100% - 15rem - (min(100%, 25rem) / 2));
       bottom: 30vh;
+    }
+  }
+
+  @keyframes ballCatchPokemonReturn {
+    0% {
+      left: calc(100% - 15rem - (min(100%, 25rem) / 2));
+      bottom: 30vh;
+    }
+    100% {
+      left: 5rem;
+      bottom: 25vh;
     }
   }
 
@@ -107,6 +132,53 @@
     }
   }
 
+  @keyframes closePokeballTop {
+    0% {
+      height: 30rem;
+      width: 30rem;
+      top: 0;
+    }
+    20% {
+      height: 30rem;
+      width: 30rem;
+    }
+    50% {
+      width: 0;
+      height: 0;
+      left: 0;
+    }
+
+    100% {
+      width: 0;
+      height: 0;
+      left: 0;
+    }
+  }
+
+  @keyframes closePokeballBottom {
+    0% {
+      height: 30rem;
+      width: 30rem;
+      top: 0;
+    }
+    20% {
+      height: 30rem;
+      width: 30rem;
+    }
+
+    50% {
+      left: 0;
+      width: 0;
+      height: 0;
+    }
+
+    100% {
+      left: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+
   // the user opposite the challenger catching the pokemon
   .battle-ground-11jt__challengee {
     margin: auto 0 5rem auto;
@@ -123,9 +195,9 @@
     }
 
     &.caught {
-      transition: width 500ms ease 2000ms, margin 500ms ease 2000ms;
-      width: 15rem;
-      margin: auto 10rem 15rem auto;
+      transition: width 1000ms ease 2000ms, margin 1000ms ease 2000ms;
+      margin: auto 20rem 25rem auto;
+      width: 0rem;
     }
   }
 
@@ -174,4 +246,12 @@
     max-width: 100rem;
     width: 92%;
   }
+}
+
+// the ame if the pokemon selected
+.layout15-kc__pokemon-name {
+  height: 0;
+  max-width: 50rem;
+  width: 90%;
+  translate: 0 5rem;
 }

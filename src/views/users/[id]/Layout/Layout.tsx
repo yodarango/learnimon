@@ -1,9 +1,9 @@
-import { PokemonThumb } from "../components/PokemonThumb/PokemonThumb";
 import BadgeImmunity from "@assets/images/badges/badge_steal.webp";
 import BadgeCatch from "@assets/images/badges/badge_catch.webp";
 import BadgeSteal from "@assets/images/badges/badge_steal.webp";
 import { getUserFromLocalStorage } from "@utils";
 import { useParams } from "react-router-dom";
+import { PokemonThumb } from "@components";
 
 // styles
 import "./Layout.scss";

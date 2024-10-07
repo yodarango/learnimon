@@ -1,12 +1,11 @@
 .pokemon-thumb-06bq {
   background-color: rgba(var(--dr-epsilon-rgb), 0.25);
-  img {
-    height: 15rem;
-    width: 15rem;
-  }
 
   .pokemon-thumb-06bq_name {
-    margin-bottom: -1rem;
+    text-overflow: ellipsis;
+    translate: 0 1rem;
+    overflow: hidden;
+    text-wrap: nowrap;
     width: 80%;
   }
 

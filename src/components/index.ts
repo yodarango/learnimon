@@ -1,4 +1,5 @@
 export { PokemonStatsCard } from "./PokemonStatsCard/PokemonStatsCard";
+export { PokemonThumb } from "./PokemonThumb/PokemonThumb";
 export { ModalHeader } from "./ModalHeader/ModalHeader";
 export { MainLayout } from "./MainLayout/MainLayout";
 export { GlowTitle } from "./GlowTitle/GlowTitle";

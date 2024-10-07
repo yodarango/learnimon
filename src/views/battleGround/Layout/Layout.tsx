@@ -12,19 +12,22 @@ import {
 } from "@context";
 import PokeballBottom from "@assets/images/pokeball_bottom.png";
 import PokeballTop from "@assets/images/pokeball_top.png";
+import { GlowTitle, PokemonStatsCard } from "@components";
 import ashe from "@assets/images/ashe.webp";
 import { useEffect, useState } from "react";
+import { PokemonThumb } from "@components";
 import { Button, If, IfElse } from "@ds";
 
 // styles
 import "./Layout.scss";
-import { PokemonStatsCard } from "@components";
+import { PokemonsListModal } from "../components/PokemonsListModal/PokemonsListModal";
 
 export const Layout = () => {
   const ctx = useBattleContext();
-  const { selectedPokemon, pokemonStatus } = ctx.state;
+  const { selectedPokemon, pokemonStatus, selectedUser } = ctx.state;
 
-  const [canStartChallenge, setCanStartChallenge] = useState<boolean>(false);
+  const [isChallengeFinished, setIsChallengeFinished] =
+    useState<boolean>(false);
   const [isReadyToTest, setIsReadyToTest] = useState<boolean>(false);
   // Responsible for showing a pokemon as captured or escaped
   const [updatedPokemonStatus, setUpdatedPokemonStatus] =
@@ -54,11 +57,11 @@ export const Layout = () => {
   // after the pokemon is selected, the user can start the challenge
   useEffect(() => {
     setTimeout(() => {
-      if (!!selectedPokemon && pokemonStatus === POKEMON_STATUS_FREE) {
-        setCanStartChallenge(true);
+      if (!!selectedPokemon && pokemonStatus !== POKEMON_STATUS_FREE) {
+        setIsChallengeFinished(true);
       }
-    }, 1000);
-  }, [selectedPokemon]);
+    }, 4000);
+  }, [pokemonStatus]);
 
   // after the challenge is finished, update the pokemon status
   useEffect(() => {
@@ -74,97 +77,85 @@ export const Layout = () => {
       ? "escaped"
       : "";
 
-  console.log(
-    "challenges",
-    isReadyToTest && pokemonStatus === POKEMON_STATUS_FREE
-  );
   return (
     <BattleGround hasChallenges={challenges.length > 0}>
-      <IfElse condition={!isReady}>
-        {/* Overlay that will display if the user is not yet ready to be tested */}
-        <div className='layout15-kc__ready d-flex align-items-center justify-content-center'>
-          <div>
-            <Button
-              onClick={handleIsReadyToSelect}
-              primary
-              className='w-100 mx-auto'
-              maxWidth={200}
-            >
-              Start
-            </Button>
-            <h1 className='text-center'>Are you ready?</h1>
-          </div>
+      {/* <IfElse condition={!isReady}> */}
+      {/* Overlay that will display if the user is not yet ready to be tested */}
+      <div className='layout15-kc__ready d-flex align-items-center justify-content-center'>
+        <div>
+          <Button
+            onClick={handleIsReadyToSelect}
+            primary
+            className='w-100 mx-auto'
+            maxWidth={200}
+          >
+            Start
+          </Button>
+          <h1 className='text-center'>Are you ready?</h1>
+        </div>
+      </div>
+      {/* <IfElse condition={!isChallengeFinished}> */}
+      <div>
+        <div className='layout15-kc__pokemon-name mt-0 p-0 rounded mx-auto'>
+          <GlowTitle className='text-center m-0'>
+            {selectedPokemon?.name}
+          </GlowTitle>
         </div>
 
-        <div>
-          {/* <IfElse condition={pokemonStatus === POKEMON_STATUS_FREE}> */}
-          <div className='battle-ground-11jt__duel d-flex align-items-center justify-content-between w-100'>
-            {/* Card responsible for shwoing the pokemon stats after is selected */}
-            <If condition={!!selectedPokemon}>
-              <div className='battle-ground-11jt__pokemon-stats-card'>
-                <PokemonStatsCard
-                  pokemon={selectedPokemon as Record<string, any>}
-                  includeTotalValue
-                />
-
-                <Button
-                  onClick={handleIsReadyToTest}
-                  className='w-100 mt-4'
-                  primary
-                >
-                  GO
-                </Button>
-              </div>
-            </If>
-            {/* The "Ash" character catching the pokemon */}
-            <div className='battle-ground-11jt__challenger'>
-              <img
-                className='character-11jt__character'
-                alt='hunter of monsters'
-                src={ashe}
+        <div className='battle-ground-11jt__duel d-flex align-items-center justify-content-between w-100'>
+          {/* Card responsible for showing the pokemon stats after is selected */}
+          <If condition={!!selectedPokemon}>
+            <div className='battle-ground-11jt__pokemon-stats-card'>
+              <PokemonStatsCard
+                pokemon={selectedPokemon as Record<string, any>}
+                includeTotalValue
               />
-            </div>
-            {/* the poke Ball that will display only if the user catches the pokemon. It travels to the right and opens itself up in order to create the illusion of catching the pokemon  */}
-            <If condition={updatedPokemonStatus === POKEMON_STATUS_CAUGHT}>
-              <aside className='battle-ground-11jt__ball'>
-                <img src={PokeballTop} alt='pokeball top' />
-                <img src={PokeballBottom} alt='pokeball bottom' />
-              </aside>
-            </If>
-            {/* The pokemon to be caught. It includes an animation of randomly iteratized pokemons to reflect the random selection  */}
-            <div
-              className={`battle-ground-11jt__challengee ${caughtStatusClass}`}
-            >
-              <RandomPokemonPicker />
-            </div>
-          </div>
-          {/* This is the random task to be completed by the user in order to catch the pokemon */}
-          <If
-            condition={isReadyToTest && pokemonStatus === POKEMON_STATUS_FREE}
-          >
-            <div className='battle-ground-11jt__task bg-beta'>
-              <div>
-                <RandomTaskPicker />
-              </div>
+
+              <Button
+                onClick={handleIsReadyToTest}
+                className='w-100 mt-4'
+                primary
+              >
+                GO
+              </Button>
             </div>
           </If>
+          {/* The "Ash" character catching the pokemon */}
+          <div className='battle-ground-11jt__challenger'>
+            <img
+              className='character-11jt__character'
+              alt='hunter of monsters'
+              src={ashe}
+            />
+          </div>
+          {/* the poke Ball that will display only if the user catches the pokemon. It travels to the right and opens itself up in order to create the illusion of catching the pokemon  */}
+          <If condition={updatedPokemonStatus === POKEMON_STATUS_CAUGHT}>
+            <aside className='battle-ground-11jt__ball'>
+              <img src={PokeballTop} alt='pokeball top' />
+              <img src={PokeballBottom} alt='pokeball bottom' />
+            </aside>
+          </If>
+          {/* The pokemon to be caught. It includes an animation of randomly iteratized pokemons to reflect the random selection  */}
+          <div
+            className={`battle-ground-11jt__challengee ${caughtStatusClass}`}
+          >
+            <RandomPokemonPicker />
+          </div>
         </div>
-        {/* <IfElse condition={pokemonStatus === POKEMON_STATUS_CAUGHT}>
-        <h1>
-          <span className='d-inline-block me-6'>
-            {selectedPokemon?.pokemon?.name}
-          </span>{" "}
-          is yours!
-        </h1>
-        <h1>
-          <span className='d-inline-block me-6'>
-            {selectedPokemon?.pokemon?.name}
-          </span>{" "}
-          has escaped
-        </h1>
-      </IfElse> */}
-        {/* </IfElse> */}
-      </IfElse>
+        {/* This is the random task to be completed by the user in order to catch the pokemon */}
+        <If condition={isReadyToTest && pokemonStatus === POKEMON_STATUS_FREE}>
+          <div className='battle-ground-11jt__task bg-beta'>
+            <div>
+              <RandomTaskPicker />
+            </div>
+          </div>
+        </If>
+      </div>
+      <div className='layout15-kc__pokemon-list-modal'>
+        <PokemonsListModal />
+      </div>
+      {/* </IfElse> */}
+      {/* </IfElse> */}
     </BattleGround>
   );
 };

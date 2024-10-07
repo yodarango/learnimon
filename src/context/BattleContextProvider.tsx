@@ -5,7 +5,7 @@ import {
   POKEMON_STATUS_CAUGHT,
   POKEMON_STATUS_ESCAPED,
 } from "./BattleContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import update from "immutability-helper";
 
 type TBattleContextProvider = {
@@ -90,7 +90,6 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
       // );
     }
 
-    console.log("STATUS", status);
     setState((prevState) =>
       update(prevState, {
         pokemonStatus: {
@@ -111,6 +110,35 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
   function handleResetContext() {
     setState(initialBattleData);
   }
+
+  // I get the currently selected user based on the URL param if there is one
+  function handleGetSelectedUser() {
+    const currentUser = new URL(window.location.href).pathname.split("/").pop();
+    const currentUserString = String(currentUser);
+
+    const userData = localStorage.getItem("learnimon__users");
+    const parsedData = JSON.parse(userData || "[]");
+
+    const findUser = parsedData.find(
+      (user: Record<string, any>) => user.name === currentUserString
+    );
+
+    if (!findUser) {
+      return;
+    }
+
+    setState((prevState) =>
+      update(prevState, {
+        selectedUser: {
+          $set: findUser,
+        },
+      })
+    );
+  }
+
+  useEffect(() => {
+    handleGetSelectedUser();
+  }, []);
 
   return (
     <BattleContext.Provider
