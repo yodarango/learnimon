@@ -44,7 +44,8 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
     );
   }
 
-  const handleStatus = (status: number) => {
+  // I handle the logic for completing a challenge as correct or wrong and update the user's score and caught pokemons
+  function handleStatus(status: number) {
     const userData = localStorage.getItem("learnimon__users");
     const parsedData = JSON.parse(userData || "[]");
 
@@ -55,7 +56,7 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
       (user: Record<string, any>) => user.name === currentUserString
     );
 
-    if (!findUser && !state.selectedPokemon?.name) {
+    if (!findUser || !state.selectedPokemon?.name) {
       return;
     }
 
@@ -95,9 +96,17 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
         pokemonStatus: {
           $set: status,
         },
+        selectedUser: {
+          pokemons: {
+            $set: findUser.pokemons,
+          },
+        },
+        unavailablePokemons: {
+          $push: [state.selectedPokemon?.id],
+        },
       })
     );
-  };
+  }
 
   const handleCorrect = () => {
     handleStatus(POKEMON_STATUS_CAUGHT);
@@ -111,33 +120,62 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
     setState(initialBattleData);
   }
 
-  // I get the currently selected user based on the URL param if there is one
-  function handleGetSelectedUser() {
-    const currentUser = new URL(window.location.href).pathname.split("/").pop();
-    const currentUserString = String(currentUser);
-
-    const userData = localStorage.getItem("learnimon__users");
-    const parsedData = JSON.parse(userData || "[]");
-
-    const findUser = parsedData.find(
-      (user: Record<string, any>) => user.name === currentUserString
+  // I get all the pokemons that are currently  caught by someone so they are not available for selection
+  function handleGetUnavailablePokemons() {
+    const unavailablePokemons = localStorage.getItem(
+      "learnimon__caughtPokemons"
     );
 
-    if (!findUser) {
-      return;
-    }
+    const parsedUnavailablePokemons = JSON.parse(unavailablePokemons || "[]");
+    return parsedUnavailablePokemons;
+  }
+
+  // I hydrate the state with all the necessary data
+  function handleHydrateState() {
+    const userName = new URL(window.location.href).pathname.split("/").pop();
+    const unavailablePokemons = handleGetUnavailablePokemons();
 
     setState((prevState) =>
       update(prevState, {
+        unavailablePokemons: {
+          $set: unavailablePokemons,
+        },
         selectedUser: {
-          $set: findUser,
+          $set: handleGetUserByName(userName || ""),
         },
       })
     );
   }
 
+  // I receive a user name and set it to the state. Every time a user is selected, the state needs to be reset
+  function handleSelectUser(userName: string) {
+    const user = handleGetUserByName(userName);
+
+    if (!user) {
+      return;
+    }
+
+    setState(
+      update(state, {
+        $set: { ...initialBattleData, selectedUser: user },
+      })
+    );
+  }
+
+  // I get the corresponding user from the local storage based on the path name and return it
+  function handleGetUserByName(name: string) {
+    const userData = localStorage.getItem("learnimon__users");
+    const parsedData = JSON.parse(userData || "[]");
+
+    const findUser = parsedData.find(
+      (u: Record<string, any>) => u.name === name
+    );
+
+    return findUser;
+  }
+
   useEffect(() => {
-    handleGetSelectedUser();
+    handleHydrateState();
   }, []);
 
   return (
@@ -147,7 +185,7 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
         handlePokemonSelected,
         handleResetContext,
         handleSelectTask,
-        // handleSelectUser,
+        handleSelectUser,
         handleCorrect,
         handleWrong,
       }}

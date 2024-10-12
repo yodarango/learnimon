@@ -11,7 +11,7 @@ export const PokemonsListModal = () => {
   return (
     <div className='pokemons-list-modal-49bq bg-beta p-4 rounded'>
       <section className='users-id-96jk__user-pokemons'>
-        <h2 className='mb-4'>Most recent catch</h2>
+        <h2 className='mb-4'>New catch 🎉</h2>
         <div className='users-id-96jk__user-pokemons-pokemon d-flex align-items-start justify-content-start gap-4'>
           <PokemonThumb
             pokemon={selectedUser?.pokemons[0]}

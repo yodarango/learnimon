@@ -30,7 +30,7 @@ export const useRandomPokemonPicker = () => {
   const ctx = useBattleContext();
 
   const { state, handlePokemonSelected } = ctx;
-  const { selectedPokemon: pokemon } = state;
+  const { selectedPokemon: pokemon, unavailablePokemons } = state;
 
   const [randomNumber, setRandomNumber] = useState<number | null>(null); // The id of the selected pokemon image to be displayed
   const [animationIndex, setAnimationIndex] = useState<number>(0); // The index of the image to be displayed in the loading animation
@@ -55,6 +55,12 @@ export const useRandomPokemonPicker = () => {
 
       const data = pokemonData[number];
       data.id = number;
+
+      // if this Pokemon is unavailable, get another one
+      if (unavailablePokemons.includes(data.id)) {
+        getRandomPokemon();
+        return;
+      }
 
       // setPokemon(data);
       handlePokemonSelected(data);

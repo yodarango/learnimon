@@ -1,14 +1,15 @@
 import React, { HTMLProps, useEffect, useState } from "react";
 import { Menu, MenuButton, MenuItem } from "@mui/base";
-import { useNavigate } from "react-router-dom";
+import { generatePath, useNavigate } from "react-router-dom";
 import { useBattleContext } from "@context";
 import { Dropdown, Thumbnail } from "@ds";
+import { ROUTE_BATTLE } from "@constants";
 
 // styles
 import "./Settings.scss";
 
 export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
-  const { state, handleResetContext } = useBattleContext();
+  const { state, handleSelectUser } = useBattleContext();
   const { selectedUser } = state;
 
   const navigate = useNavigate();
@@ -22,15 +23,14 @@ export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
     }
   }, []);
 
-  const handleSelectUser = (user: Record<string, any>) => {
-    location.href = location.href.replace(/\/[^/]+$/, `/${user.name}`);
-    // TODO: This is not working 👇 FIX
+  const handleSelectUserFromMenu = (user: Record<string, any>) => {
+    const userBattlePath = generatePath(ROUTE_BATTLE, {
+      name: String(user.name).replace(/\s/g, "-"),
+    });
 
-    // handleResetContext();
-    // const userBattlePath = generatePath(ROUTE_BATTLE, {
-    //   name: String(user.name).replace(/\s/g, "-"),
-    // });
-    // navigate(userBattlePath);
+    handleSelectUser(user.name);
+
+    navigate(userBattlePath);
   };
 
   return (
@@ -48,7 +48,7 @@ export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
           {users.map((user, i) => (
             <MenuItem
               key={user.name + String(i)}
-              onClick={() => handleSelectUser(user)}
+              onClick={() => handleSelectUserFromMenu(user)}
             >
               <div className='d-flex align-items-center justify-content-start gap-2 p-4'>
                 <Thumbnail

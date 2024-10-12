@@ -1,57 +1,22 @@
 // styles
 import "./FillInTheBlankChallenge.scss";
-import { useState } from "react";
 import { Button, IfElse } from "@ds";
-
-type FillInTheBlankChallengeProps = {
-  onRemainingTime: (time: number) => void;
-  onCorrect: () => void;
-  onWrong: () => void;
-  selectedTask: any;
-};
-
-const ANSWER_IS_UNANSWERED = 0;
-const ANSWER_IS_INCORRECT = 2;
-const ANSWER_IS_CORRECT = 1;
+import {
+  FillInTheBlankChallengeProps,
+  useFillInTheBlankChallenge,
+  ANSWER_IS_UNANSWERED,
+} from "./useFillInTheBlankChallenge";
 
 export const FillInTheBlankChallenge = (
   props: FillInTheBlankChallengeProps
 ) => {
-  const [answerInputs, setAnswerInputs] = useState<Record<string, string>>({});
-  const [correct, setCorrect] = useState<number>(ANSWER_IS_UNANSWERED);
-
-  const { onCorrect, onWrong, selectedTask } = props;
-
-  const handleInputChange = (idex: number, value: string) => {
-    const newInputs = { ...answerInputs };
-    newInputs[idex] = value;
-    setAnswerInputs(newInputs);
-  };
-
-  // Checks the user's answer against the correct answer
-  function checkAnswer() {
-    if (!selectedTask) return;
-
-    const userAnswer = selectedTask.answer
-      .split(" ")
-      .map((part: any, index: any) => {
-        if (!!answerInputs[index])
-          return part.replace(part.trim(), answerInputs[index]);
-        return part;
-      })
-      .join("")
-      .replace(/ /g, "")
-      .toLowerCase();
-    const correctAnswer = selectedTask.answer.replace(/ /g, "").toLowerCase();
-
-    if (userAnswer === correctAnswer) {
-      setCorrect(ANSWER_IS_CORRECT);
-      onCorrect();
-    } else {
-      setCorrect(ANSWER_IS_INCORRECT);
-      onWrong();
-    }
-  }
+  const {
+    handleInputChange,
+    answerInputs,
+    selectedTask,
+    checkAnswer,
+    correct,
+  } = useFillInTheBlankChallenge(props);
 
   return (
     <div className='fill-in-the-blank-11ta'>

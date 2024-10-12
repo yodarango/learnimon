@@ -1,88 +1,34 @@
 import { RandomPokemonPicker } from "../components/RandomPokemonPicker/RandomPokemonPicker";
-import {
-  RandomTaskPicker,
-  TChallenge,
-} from "../components/RandomTaskPicker/RandomTaskPicker";
+import { PokemonsListModal } from "../components/PokemonsListModal/PokemonsListModal";
+import { RandomTaskPicker } from "../components/RandomTaskPicker/RandomTaskPicker";
 import { BattleGround } from "../components/BattleGround/BattleGround";
-import {
-  POKEMON_STATUS_CAUGHT,
-  POKEMON_STATUS_ESCAPED,
-  POKEMON_STATUS_FREE,
-  useBattleContext,
-} from "@context";
+import { POKEMON_STATUS_CAUGHT, POKEMON_STATUS_FREE } from "@context";
 import PokeballBottom from "@assets/images/pokeball_bottom.png";
+import { Settings } from "../components/Settings/Settings";
 import PokeballTop from "@assets/images/pokeball_top.png";
 import { Backdrop, Button, If, IfElse, Modal } from "@ds";
 import { GlowTitle, PokemonStatsCard } from "@components";
 import ashe from "@assets/images/ashe.webp";
-import { useEffect, useState } from "react";
+import { useLayout } from "./useLayout";
 
 // styles
 import "./Layout.scss";
-import { PokemonsListModal } from "../components/PokemonsListModal/PokemonsListModal";
-import { Settings } from "../components/Settings/Settings";
 
 export const Layout = () => {
-  const ctx = useBattleContext();
-  const { selectedPokemon, pokemonStatus, selectedUser } = ctx.state;
-
-  const [isChallengeFinished, setIsChallengeFinished] =
-    useState<boolean>(false);
-  const [isReadyToTest, setIsReadyToTest] = useState<boolean>(false);
-  // Responsible for showing a pokemon as captured or escaped
-  const [updatedPokemonStatus, setUpdatedPokemonStatus] =
-    useState<number>(POKEMON_STATUS_FREE);
-  const [challenges, setChallenges] = useState<TChallenge[]>([]);
-  const [isReadyToSelect, setIsReadyToSelect] = useState<boolean>(false);
-
-  useEffect(() => {
-    const challenges = localStorage.getItem("learnimon__challenges");
-    if (challenges) {
-      if (challenges.length === 0) {
-        setChallenges([]);
-      } else {
-        setChallenges(JSON.parse(challenges));
-      }
-    }
-  }, []);
-
-  const handleIsReadyToSelect = () => {
-    setIsReadyToSelect(true);
-  };
-
-  const handleIsReadyToTest = () => {
-    setIsReadyToTest(true);
-  };
-
-  // after the pokemon is selected, the user can start the challenge
-  useEffect(() => {
-    setTimeout(() => {
-      if (!!selectedPokemon && pokemonStatus !== POKEMON_STATUS_FREE) {
-        setIsChallengeFinished(true);
-      }
-    }, 4000);
-  }, [pokemonStatus]);
-
-  // after the challenge is finished, update the pokemon status
-  useEffect(() => {
-    setTimeout(() => {
-      setUpdatedPokemonStatus(pokemonStatus);
-    }, 1000);
-  }, [pokemonStatus]);
-
-  const caughtStatusClass =
-    pokemonStatus === POKEMON_STATUS_CAUGHT
-      ? "caught"
-      : pokemonStatus === POKEMON_STATUS_ESCAPED
-      ? "scaped"
-      : "";
-
-  const handleCloseModal = () => {
-    setIsChallengeFinished(false);
-    setIsReadyToSelect(false);
-    setIsReadyToTest(false);
-    ctx.handleResetContext();
-  };
+  const {
+    handleIsReadyToSelect,
+    updatedPokemonStatus,
+    isChallengeFinished,
+    handleIsReadyToTest,
+    caughtStatusClass,
+    handleCloseModal,
+    isReadyToSelect,
+    selectedPokemon,
+    pokemonStatus,
+    isReadyToTest,
+    selectedUser,
+    challenges,
+  } = useLayout();
 
   return (
     <BattleGround hasChallenges={challenges.length > 0}>
@@ -92,19 +38,27 @@ export const Layout = () => {
       <IfElse condition={!isReadyToSelect}>
         {/* Overlay that will display if the user is not yet ready to be tested */}
         <div className='layout15-kc__ready d-flex align-items-center justify-content-center'>
-          <div>
-            <Button
-              onClick={handleIsReadyToSelect}
-              primary
-              className='w-100 mx-auto'
-              maxWidth={200}
-            >
-              Start
-            </Button>
-            <h1 className='text-center'>Are you ready?</h1>
-          </div>
+          <IfElse condition={!!selectedUser}>
+            <div>
+              <Button
+                onClick={handleIsReadyToSelect}
+                primary
+                className='w-100 mx-auto'
+                maxWidth={200}
+              >
+                Start
+              </Button>
+              <h1 className='text-center'>Are you ready?</h1>
+            </div>
+            <div>
+              <GlowTitle className='text-center'>
+                Select a user to start
+              </GlowTitle>
+            </div>
+          </IfElse>
         </div>
         <IfElse condition={!isChallengeFinished}>
+          {/* The task modal and the status of the current pokemon */}
           <div>
             <div className='layout15-kc__pokemon-name mt-0 p-0 rounded mx-auto'>
               <GlowTitle className='text-center m-0'>

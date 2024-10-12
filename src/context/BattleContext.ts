@@ -4,6 +4,7 @@ export type TDefaultBattleState = {
   selectedPokemon: Record<string, any> | null;
   selectedUser: Record<string, any> | null;
   selectedTask: Record<string, any> | null;
+  unavailablePokemons: number[];
   pokemonStatus: number;
 };
 
@@ -13,6 +14,7 @@ export const POKEMON_STATUS_FREE = 0;
 
 export const initialBattleData: TDefaultBattleState = {
   pokemonStatus: POKEMON_STATUS_FREE,
+  unavailablePokemons: [], // pokemons that are currently in caught by someone
   selectedPokemon: null,
   selectedTask: null,
   selectedUser: null,
@@ -21,8 +23,8 @@ export const initialBattleData: TDefaultBattleState = {
 export const defaultBattleContext = {
   state: initialBattleData,
   handlePokemonSelected: (_: Record<string, any>) => {},
-  // handleSelectUser: (_: Record<string, any>) => {},
   handleSelectTask: (_: Record<string, any>) => {},
+  handleSelectUser: (_: string) => {},
   handleResetContext: () => {},
   handleCorrect: () => {},
   handleWrong: () => {},
