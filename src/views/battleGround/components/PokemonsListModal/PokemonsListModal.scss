@@ -11,6 +11,7 @@
 
       .pokemons-96jk__user-pokemons-grid {
         grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+        grid-template-rows: repeat(auto-fill, 20rem);
         justify-content: center;
         display: grid;
         height: 100%;
@@ -18,8 +19,12 @@
       }
     }
     .users-id-96jk__user-pokemons-pokemon {
-      padding-top: 5rem;
-      width: 30rem;
+      .pokemon_thumb-96jk {
+        width: 50rem;
+      }
+      > * {
+        width: 100%;
+      }
     }
   }
 }
