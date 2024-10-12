@@ -44,47 +44,5 @@
   .battle-ground-11jt__container {
     position: relative;
     z-index: 3;
-
-    .battle-ground-11jt__settings {
-      position: fixed;
-      left: var(--dr-spacing-4);
-      top: var(--dr-spacing-4);
-    }
-
-    // .battle-ground-11jt__content {
-    //   position: relative;
-    //   height: 100%;
-    //   width: 100%;
-    //   z-index: 2;
-    // }
-
-    // .battle-ground-11jt__character {
-    //   position: absolute;
-    //   max-width: 50rem;
-    //   margin: auto;
-    //   z-index: 1;
-    //   width: 80%;
-    //   bottom: 0;
-    //   right: 0;
-    //   left: 0;
-    //   top: auto;
-
-    //   img {
-    //     object-position: center;
-    //     object-fit: contain;
-    //     height: 100%;
-    //     width: 100%;
-    //   }
-
-    //   .battle-ground-11jt__sphere {
-    //     position: absolute;
-    //     margin: auto;
-    //     bottom: auto;
-    //     width: 5rem;
-    //     right: 15%;
-    //     left: auto;
-    //     top: 15%;
-    //   }
-    // }
   }
 }

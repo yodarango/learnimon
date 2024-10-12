@@ -8,6 +8,13 @@
   top: 0;
 }
 
+.battle-ground-11jt__settings {
+  position: fixed;
+  left: var(--dr-spacing-4);
+  top: var(--dr-spacing-4);
+  z-index: 5;
+}
+
 .layout15-kc__pokemon-list-modal {
   overflow: hidden;
   max-width: 100rem;
@@ -188,10 +195,10 @@
 
     @keyframes exitToRight {
       0% {
-        left: 0;
+        translate: 0;
       }
       100% {
-        left: 100vw;
+        translate: 100vw;
       }
     }
 
@@ -199,6 +206,10 @@
       transition: width 1000ms ease 2000ms, margin 1000ms ease 2000ms;
       margin: auto 20rem 25rem auto;
       width: 0rem;
+    }
+
+    &.scaped {
+      animation: exitToRight 1000ms ease 1000ms forwards;
     }
   }
 

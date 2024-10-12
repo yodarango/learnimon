@@ -1,7 +1,6 @@
 import { POKEMON_STATUS_CAUGHT, useBattleContext } from "@context";
 import landscape from "@assets/images/landscape.webp";
 import { ROUTE_HOME_CHALLENGES } from "@constants";
-import { Settings } from "../Settings/Settings";
 import { useNavigate } from "react-router-dom";
 import { GlowTitle } from "@components";
 import { Button, IfElse } from "@ds";
@@ -51,9 +50,6 @@ export const BattleGround = (props: BattleGroundProps) => {
         </div>
 
         <div className='battle-ground-11jt__container'>
-          <div className='battle-ground-11jt__settings'>
-            <Settings />
-          </div>
           <section>{children}</section>
         </div>
       </IfElse>

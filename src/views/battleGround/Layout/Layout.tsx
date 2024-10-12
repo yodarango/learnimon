@@ -12,15 +12,15 @@ import {
 } from "@context";
 import PokeballBottom from "@assets/images/pokeball_bottom.png";
 import PokeballTop from "@assets/images/pokeball_top.png";
+import { Backdrop, Button, If, IfElse, Modal } from "@ds";
 import { GlowTitle, PokemonStatsCard } from "@components";
 import ashe from "@assets/images/ashe.webp";
 import { useEffect, useState } from "react";
-import { PokemonThumb } from "@components";
-import { Backdrop, Button, If, IfElse, Modal } from "@ds";
 
 // styles
 import "./Layout.scss";
 import { PokemonsListModal } from "../components/PokemonsListModal/PokemonsListModal";
+import { Settings } from "../components/Settings/Settings";
 
 export const Layout = () => {
   const ctx = useBattleContext();
@@ -33,7 +33,7 @@ export const Layout = () => {
   const [updatedPokemonStatus, setUpdatedPokemonStatus] =
     useState<number>(POKEMON_STATUS_FREE);
   const [challenges, setChallenges] = useState<TChallenge[]>([]);
-  const [isReady, setIsReadyToSelect] = useState<boolean>(false);
+  const [isReadyToSelect, setIsReadyToSelect] = useState<boolean>(false);
 
   useEffect(() => {
     const challenges = localStorage.getItem("learnimon__challenges");
@@ -74,19 +74,22 @@ export const Layout = () => {
     pokemonStatus === POKEMON_STATUS_CAUGHT
       ? "caught"
       : pokemonStatus === POKEMON_STATUS_ESCAPED
-      ? "escaped"
+      ? "scaped"
       : "";
 
   const handleCloseModal = () => {
-    console.log("closing modal");
     setIsChallengeFinished(false);
     setIsReadyToSelect(false);
     setIsReadyToTest(false);
+    ctx.handleResetContext();
   };
 
   return (
     <BattleGround hasChallenges={challenges.length > 0}>
-      <IfElse condition={!isReady}>
+      <div className='battle-ground-11jt__settings'>
+        <Settings />
+      </div>
+      <IfElse condition={!isReadyToSelect}>
         {/* Overlay that will display if the user is not yet ready to be tested */}
         <div className='layout15-kc__ready d-flex align-items-center justify-content-center'>
           <div>
@@ -160,11 +163,21 @@ export const Layout = () => {
               </div>
             </If>
           </div>
-          <div className='layout15-kc__pokemon-list-modal'>
-            <Backdrop open={true} onClose={handleCloseModal}>
-              <PokemonsListModal />
-            </Backdrop>
-          </div>
+          {/* Show the corresponding modal after the pokemon is caught or it scapes */}
+          <IfElse condition={pokemonStatus === POKEMON_STATUS_CAUGHT}>
+            <div className='layout15-kc__pokemon-list-modal'>
+              <Backdrop open={true} onClose={handleCloseModal}>
+                <PokemonsListModal />
+              </Backdrop>
+            </div>
+            <Modal
+              title='Pokemon has scaped '
+              open={true}
+              onClose={handleCloseModal}
+            >
+              <p className='text-center'>Sorry, your pokemon has scaped! 😫</p>
+            </Modal>
+          </IfElse>
         </IfElse>
       </IfElse>
     </BattleGround>

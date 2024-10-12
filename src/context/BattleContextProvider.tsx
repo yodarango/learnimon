@@ -60,7 +60,7 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
     }
 
     findUser.score += state.selectedPokemon!.value;
-    findUser.pokemons.push(state.selectedPokemon);
+    findUser.pokemons.unshift(state.selectedPokemon);
 
     // TODO: Remove the pokemon automatically from the other users. However, there are two classes so it needs to be done on per class basis
 

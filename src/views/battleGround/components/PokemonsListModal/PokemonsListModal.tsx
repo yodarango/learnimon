@@ -8,7 +8,6 @@ export const PokemonsListModal = () => {
   const { state } = useBattleContext();
   const { selectedUser } = state;
 
-  console.log(selectedUser);
   return (
     <div className='pokemons-list-modal-49bq bg-beta p-4 rounded'>
       <section className='users-id-96jk__user-pokemons'>
