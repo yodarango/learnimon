@@ -23,6 +23,7 @@ export const initialBattleData: TDefaultBattleState = {
 export const defaultBattleContext = {
   state: initialBattleData,
   handlePokemonSelected: (_: Record<string, any>) => {},
+  handleSelectUserAndResetState: (_: string) => {},
   handleSelectTask: (_: Record<string, any>) => {},
   handleSelectUser: (_: string) => {},
   handleResetContext: () => {},

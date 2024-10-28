@@ -148,6 +148,21 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
   }
 
   // I receive a user name and set it to the state. Every time a user is selected, the state needs to be reset
+  function handleSelectUserAndResetState(userName: string) {
+    const user = handleGetUserByName(userName);
+
+    if (!user) {
+      return;
+    }
+
+    console.log("BattleContextProvider mounted");
+    setState(
+      update(state, {
+        $set: { ...initialBattleData, selectedUser: user },
+      })
+    );
+  }
+
   function handleSelectUser(userName: string) {
     const user = handleGetUserByName(userName);
 
@@ -155,9 +170,9 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
       return;
     }
 
-    setState(
-      update(state, {
-        $set: { ...initialBattleData, selectedUser: user },
+    setState((prev) =>
+      update(prev, {
+        selectedUser: { $set: user },
       })
     );
   }
@@ -182,6 +197,7 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
     <BattleContext.Provider
       value={{
         state,
+        handleSelectUserAndResetState,
         handlePokemonSelected,
         handleResetContext,
         handleSelectTask,

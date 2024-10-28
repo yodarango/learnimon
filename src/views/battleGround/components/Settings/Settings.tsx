@@ -9,7 +9,7 @@ import { ROUTE_BATTLE } from "@constants";
 import "./Settings.scss";
 
 export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
-  const { state, handleSelectUser } = useBattleContext();
+  const { state, handleSelectUserAndResetState } = useBattleContext();
   const { selectedUser } = state;
 
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export const Settings: React.FC<HTMLProps<HTMLDivElement>> = () => {
       name: String(user.name).replace(/\s/g, "-"),
     });
 
-    handleSelectUser(user.name);
+    handleSelectUserAndResetState(user.name);
 
     navigate(userBattlePath);
   };
