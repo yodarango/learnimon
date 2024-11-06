@@ -1,0 +1,252 @@
+.steal-battle-01th__settings {
+  position: fixed;
+  left: var(--dr-spacing-4);
+  top: var(--dr-spacing-4);
+  z-index: 5;
+}
+
+.steal-battle-01th_pokemon-stats {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 4;
+  max-width: 30rem;
+  width: 90%;
+}
+
+.layout15-kc__pokemon-list-modal {
+  overflow: hidden;
+  max-width: 100rem;
+  position: fixed;
+  height: 90vh;
+  width: 90vw;
+  margin: auto;
+  z-index: 4;
+  inset: 0;
+}
+
+.layout15-kc__title {
+  margin-top: 30vh;
+}
+
+.steal-battle-01th__duel {
+  position: relative;
+  max-width: 140rem;
+  height: 100vh;
+  margin: auto;
+  width: 94vw;
+  bottom: 0;
+
+  //  the character catchinq the pokemon
+  .steal-battle-01th__challenger,
+  .steal-battle-01th__challengee,
+  .steal-battle-01th__pokemon {
+    position: relative;
+    margin-bottom: 5rem;
+    margin-top: auto;
+    height: 30rem;
+    width: 30rem;
+    z-index: 3;
+
+    .steal-battle-01th__player-name {
+      margin: calc(-1 * var(--dr-spacing-4)) auto 0;
+    }
+
+    .character-11jt__character {
+      display: block;
+      width: 100%;
+      z-index: 3;
+      bottom: 0;
+      top: auto;
+      left: 0;
+    }
+  }
+
+  .steal-battle-01th__pokemon {
+    height: 20rem;
+    width: 20rem;
+  }
+
+  .steal-battle-01th__challengee img {
+    transform: scaleX(-1);
+  }
+
+  //  the task modal
+  .steal-battle-01th__task {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 4;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+
+    > div {
+      margin: 5rem auto 0;
+      max-width: 100rem;
+      width: 92%;
+    }
+  }
+
+  .steal-battle-01th__pokemon-stats-card {
+    position: absolute;
+    max-width: 30rem;
+    margin: auto;
+    scale: 0.8;
+    width: 90%;
+    right: 0;
+    top: -2%;
+  }
+}
+// pokeball
+.steal-battle-01th__duel {
+  .steal-battle-01th__ball {
+    position: absolute;
+    display: block;
+    height: 0;
+    width: 0;
+    z-index: 2;
+    left: 5rem;
+    bottom: 25vh;
+
+    img {
+      object-position: center;
+      object-fit: contain;
+      position: absolute;
+      display: block;
+      margin: auto;
+      width: 100%;
+
+      &:last-child {
+        z-index: 1;
+      }
+
+      &:first-child {
+        z-index: 2;
+      }
+    }
+  }
+
+  &.caught {
+    .steal-battle-01th__ball {
+      animation: ballCatchPokemon 1000ms cubic-bezier(0.075, 0.82, 0.165, 1)
+          forwards,
+        ballCatchPokemonReturn 1000ms 2000ms cubic-bezier(0.075, 0.82, 0.165, 1)
+          forwards;
+
+      img {
+        &:last-child {
+          z-index: 1;
+          animation: openPokeballBottom 1000ms 1000ms ease-in-out forwards,
+            closePokeballBottom 1000ms 2000ms ease-in-out forwards;
+        }
+
+        &:first-child {
+          z-index: 2;
+          animation: openPokeballTop 1000ms 1000ms ease-in-out forwards,
+            closePokeballTop 1000ms 2000ms ease-in-out forwards;
+        }
+      }
+    }
+  }
+
+  @keyframes ballCatchPokemon {
+    0% {
+      left: 0;
+    }
+    100% {
+      // 100 - ball width (when grown to 30rem) - half of the pokemon width
+      left: calc(100% - 15rem - (min(100%, 25rem) / 2));
+      bottom: 30vh;
+    }
+  }
+
+  @keyframes ballCatchPokemonReturn {
+    0% {
+      left: calc(100% - 15rem - (min(100%, 25rem) / 2));
+      bottom: 30vh;
+    }
+    100% {
+      left: 5rem;
+      bottom: 25vh;
+    }
+  }
+
+  @keyframes openPokeballTop {
+    0% {
+      top: -10rem;
+    }
+    80% {
+      height: 30rem;
+      width: 30rem;
+    }
+    100% {
+      height: 30rem;
+      width: 30rem;
+      top: 0;
+    }
+  }
+
+  @keyframes openPokeballBottom {
+    0% {
+      top: 10rem;
+    }
+    80% {
+      height: 30rem;
+      width: 30rem;
+    }
+    100% {
+      height: 30rem;
+      width: 30rem;
+      top: 0;
+    }
+  }
+
+  @keyframes closePokeballTop {
+    0% {
+      height: 30rem;
+      width: 30rem;
+      top: 0;
+    }
+    20% {
+      height: 30rem;
+      width: 30rem;
+    }
+    50% {
+      width: 0;
+      height: 0;
+      left: 0;
+    }
+
+    100% {
+      width: 0;
+      height: 0;
+      left: 0;
+    }
+  }
+
+  @keyframes closePokeballBottom {
+    0% {
+      height: 30rem;
+      width: 30rem;
+      top: 0;
+    }
+    20% {
+      height: 30rem;
+      width: 30rem;
+    }
+
+    50% {
+      left: 0;
+      width: 0;
+      height: 0;
+    }
+
+    100% {
+      left: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+}

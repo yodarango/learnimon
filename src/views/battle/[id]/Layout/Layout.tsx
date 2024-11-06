@@ -1,7 +1,7 @@
 import { RandomPokemonPicker } from "../components/RandomPokemonPicker/RandomPokemonPicker";
 import { PokemonsListModal } from "../components/PokemonsListModal/PokemonsListModal";
 import { RandomTaskPicker } from "../components/RandomTaskPicker/RandomTaskPicker";
-import { BattleGround } from "../components/BattleGround/BattleGround";
+import { BattleGround } from "@views/components/BattleGround/BattleGround";
 import { POKEMON_STATUS_CAUGHT, POKEMON_STATUS_FREE } from "@context";
 import PokeballBottom from "@assets/images/pokeball_bottom.png";
 import { Settings } from "../components/Settings/Settings";

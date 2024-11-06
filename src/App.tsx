@@ -4,11 +4,16 @@ import {
   ROUTE_HOME_CHALLENGES,
   ROUTE_HOME_USERS_SINGLE,
   ROUTE_HOME_USERS,
+  ROUTE_STEAL,
 } from "@constants";
 import { BattleContextProvider } from "@context";
-import { ViewBattleGround, ViewChallenges, ViewUsersId } from "@views/index";
-import { ViewIndex } from "@views/index";
-
+import {
+  ViewBattleGround,
+  ViewChallenges,
+  ViewUsersId,
+  ViewIndex,
+  ViewSteal,
+} from "@views/index";
 import {
   createRoutesFromElements,
   createBrowserRouter,
@@ -20,6 +25,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path={""} errorElement={<></>}>
       <Route path={ROUTE_HOME_CHALLENGES} element={<ViewChallenges />} />
+      <Route path={ROUTE_STEAL} element={<ViewSteal />} />
       <Route path={ROUTE_BATTLE} element={<ViewBattleGround />} />
       <Route path={ROUTE_HOME_USERS_SINGLE} element={<ViewUsersId />} />
       <Route path={ROUTE_HOME} element={<ViewIndex />} />

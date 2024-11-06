@@ -189,6 +189,75 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
     return findUser;
   }
 
+  // I handle the logic from stealing a pokemon from another user. I receive a pokemon Id and user name and
+  // update the and remove the pokemon from the other user and add it to the current user
+  function handleStealAPokemon(
+    pokemonId: string,
+    stealingUser: string,
+    userToStealFrom: string
+  ) {
+    const userData = localStorage.getItem("learnimon__users");
+    const parsedData = JSON.parse(userData || "[]");
+
+    const findStealingUser = parsedData.find(
+      (user: Record<string, any>) => user.name === stealingUser
+    );
+
+    const findUserToStealFrom = parsedData.find(
+      (user: Record<string, any>) => user.name === userToStealFrom
+    );
+
+    if (!findStealingUser || !findUserToStealFrom) {
+      return;
+    }
+
+    const pokemonToSteal = findUserToStealFrom.pokemons.find(
+      (pokemon: Record<string, any>) => pokemon.id === pokemonId
+    );
+
+    if (!pokemonToSteal) {
+      return;
+    }
+
+    findStealingUser.pokemons.unshift(pokemonToSteal);
+
+    const newUserData = parsedData.map((user: Record<string, any>) =>
+      user.name === findStealingUser.name ? findStealingUser : user
+    );
+
+    localStorage.setItem("learnimon__users", JSON.stringify(newUserData));
+
+    // remove the pokemon from the user that was stolen from
+    const newUserDataToStealFrom = findUserToStealFrom.pokemons.filter(
+      (pokemon: Record<string, any>) => pokemon.id !== pokemonId
+    );
+
+    const newUserDataToStealFromUpdated = parsedData.map(
+      (user: Record<string, any>) =>
+        user.name === findUserToStealFrom.name
+          ? {
+              ...user,
+              pokemons: newUserDataToStealFrom,
+            }
+          : user
+    );
+
+    localStorage.setItem(
+      "learnimon__users",
+      JSON.stringify(newUserDataToStealFromUpdated)
+    );
+
+    setState((prevState) =>
+      update(prevState, {
+        selectedUser: {
+          pokemons: {
+            $set: findStealingUser.pokemons,
+          },
+        },
+      })
+    );
+  }
+
   useEffect(() => {
     handleHydrateState();
   }, []);
@@ -199,6 +268,7 @@ export const BattleContextProvider = (props: TBattleContextProvider) => {
         state,
         handleSelectUserAndResetState,
         handlePokemonSelected,
+        handleStealAPokemon,
         handleResetContext,
         handleSelectTask,
         handleSelectUser,

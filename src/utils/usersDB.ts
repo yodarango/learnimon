@@ -9,7 +9,11 @@ export function getLocalStorageUsers() {
 
 // exports a user from local storage and adds a few properties
 export function getUserFromLocalStorage(id: string): Record<string, any> {
+  if (!id) return {};
+
   const users = getLocalStorageUsers();
-  const user = users.find((user: any) => user.name === id) || {};
+  const user =
+    users.find((user: any) => user.name.toLowerCase() === id.toLowerCase()) ||
+    {};
   return user;
 }
